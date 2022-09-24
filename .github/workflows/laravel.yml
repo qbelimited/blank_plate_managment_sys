@@ -41,8 +41,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --ignore-platform-reqs --no-progress --prefer-dist --with-all-dependencies
-          composer update --${{ matrix.dependency-version }} --ignore-platform-reqs --no-progress --prefer-dist --with-all-dependencies
+          composer update --ignore-platform-reqs --with-all-dependencies
 
       - name: Prepare Laravel Application
         run: |
