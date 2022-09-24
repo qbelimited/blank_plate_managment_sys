@@ -26,7 +26,7 @@ jobs:
                     - laravel: 7.*
                       php: 7.4
 
-    name: PHP v-${{ matrix.php }} - Laravel v-${{ matrix.laravel }} - dependancy v-${{ matrix.dependency-version }} - os-${{ matrix.os }}
+    name: PHP v-${{ matrix.php }}, Laravel v-${{ matrix.laravel }}, d-${{ matrix.dependency-version }}, os-${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -67,3 +67,25 @@ jobs:
 
       - name: Perform phpmd script
         run: ./vendor/bin/phpmd app/ github phpmdrules.xml
+
+      # - name: Send email notification
+      #   uses: wadeww/send-email-action@master
+      #   with:
+      #     server_address: smtp.gmail.com
+      #     port: 465
+      #     username: ${{secrets.MAIL_USERNAME}}
+      #     password: ${{secrets.MAIL_PASSWORD}}
+      #     subject: Workflow finished
+      #     body: Job completed ${{job.status}}
+      #     to: john@denver.com, elton@john.com
+      #     from: Me
+
+      # - name: Send Slack notification
+      #   uses: 8398a7/action-slack@v2
+      #   if: failure()
+      #   with:
+      #       status: ${{ job.status }}
+      #       author_name: ${{ github.actor }}
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
