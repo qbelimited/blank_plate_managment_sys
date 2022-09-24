@@ -12,6 +12,6 @@ class Platedimension extends Model
     public function productions()
     {
 
-        return $this->hasMany('App\Production', 'platedimension_id', 'id');
+        return $this->hasMany(Production::class, 'platedimension_id', 'id');
     }
 }

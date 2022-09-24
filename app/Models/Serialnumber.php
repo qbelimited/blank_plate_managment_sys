@@ -11,11 +11,11 @@ class Serialnumber extends Model
 
     public function production()
     {
-        return $this->belongsTo('App\Production');
+        return $this->belongsTo(Production::class);
     }
 
     public function plate()
     {
-        return $this->belongsTo('App\Plate', 'serialnumber_id', 'id');
+        return $this->belongsTo(Plate::class, 'serialnumber_id', 'id');
     }
 }

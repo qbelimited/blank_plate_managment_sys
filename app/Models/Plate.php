@@ -11,6 +11,6 @@ class Plate extends Model
 
     public function serial()
     {
-        return $this->belongsTo('App\Serialnumber');
+        return $this->belongsTo(Serialnumbered::class);
     }
 }

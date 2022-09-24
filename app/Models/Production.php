@@ -11,17 +11,17 @@ class Production extends Model
 
     public function dimension()
     {
-        return $this->belongsTo('App\Platedimensions');
+        return $this->belongsTo(Platedimension::class);
     }
 
     public function platetype()
     {
-        return $this->belongsTo('App\Platetype');
+        return $this->belongsTo(Platetype::class);
     }
 
     public function serials()
     {
 
-        return $this->hasMany('App\Serialnumber', 'production_id', 'id');
+        return $this->hasMany(Serialnumber::class, 'production_id', 'id');
     }
 }

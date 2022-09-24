@@ -12,6 +12,6 @@ class Company extends Model
     public function users()
     {
 
-        return $this->hasMany('App\User', 'company_id', 'id');
+        return $this->hasMany(User::class, 'company_id', 'id');
     }
 }

@@ -11,7 +11,6 @@ class Platetype extends Model
 
     public function productions()
     {
-
-        return $this->hasMany('App\Production', 'platetype_id', 'id');
+        return $this->hasMany(Production::class, 'platetype_id', 'id');
     }
 }

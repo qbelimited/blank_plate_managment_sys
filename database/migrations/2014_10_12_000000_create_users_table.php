@@ -21,12 +21,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedInteger('company_id')->nullable();
+            $table->foreign('company_id')->references('id')->on('companies_table');
             $table->tinyInteger('type')->default(0);
             /* Users: 0=>admin, 1=>manufacturer, 2=>dvla, 3=>embosser */
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('company_id')->references('id')->on('companies_table');
         });
     }
 

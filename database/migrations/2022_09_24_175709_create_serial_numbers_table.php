@@ -16,10 +16,9 @@ return new class extends Migration
         Schema::create('serialnumbers', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('production_id');
+            $table->foreign('production_id')->references('id')->on('productions_table');
             $table->string('serial');
             $table->timestamps();
-
-            $table->foreign('production_id')->references('id')->on('productions_table');
         });
     }
 
