@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin1234'),
             'type' => '0',
+            'company_id' => '1',
         ]);
 
         User::create([
@@ -28,6 +29,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'manf@admin.com',
             'password' => bcrypt('admin1234'),
             'type' => '1',
+            'company_id' => '1',
         ]);
 
         User::create([
@@ -36,6 +38,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'dvla@admin.com',
             'password' => bcrypt('admin1234'),
             'type' => '2',
+            'company_id' => '1',
         ]);
 
         User::create([
@@ -44,6 +47,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'emboss@admin.com',
             'password' => bcrypt('admin1234'),
             'type' => '3',
+            'company_id' => '1',
         ]);
     }
 }

@@ -13,14 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $seeders = array(
-            'UsersTableSeeder::class',
-            'PlatetypesTableSeeder::class',
-            'PlatedimensionsTableSeeder::class'
-        );
-
-        foreach ($seeders as $seeder) {
-            $this->call($seeder);
-        }
+        $this->call([
+            CompaniesTableSeeder::class,
+            UsersTableSeeder::class,
+            PlatetypesTableSeeder::class,
+            PlatedimensionsTableSeeder::class,
+        ]);
     }
 }

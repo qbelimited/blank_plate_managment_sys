@@ -14,23 +14,23 @@ class PlatetypesTableSeeder extends Seeder
      */
     public function run()
     {
-        Platetype::create([
+        PlateType::create([
             'color' => 'White',
         ]);
 
-        Platetype::create([
+        PlateType::create([
             'color' => 'Yellow',
         ]);
 
-        Platetype::create([
+        PlateType::create([
             'color' => 'Blue',
         ]);
 
-        Platetype::create([
+        PlateType::create([
             'color' => 'Red',
         ]);
 
-        Platetype::create([
+        PlateType::create([
             'color' => 'Green',
         ]);
     }

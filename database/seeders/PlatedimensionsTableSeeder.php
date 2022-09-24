@@ -14,15 +14,15 @@ class PlatedimensionsTableSeeder extends Seeder
      */
     public function run()
     {
-        Platedimension::create([
+        PlateDimension::create([
             'dimensions' => '520x112',
         ]);
 
-        Platedimension::create([
+        PlateDimension::create([
             'dimensions' => '340x260',
         ]);
 
-        Platedimension::create([
+        PlateDimension::create([
             'dimensions' => '240x260',
         ]);
     }
