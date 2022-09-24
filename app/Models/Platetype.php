@@ -8,9 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class Platetype extends Model
 {
     use HasFactory;
-
-    public function productions()
-    {
-        return $this->hasMany(Production::class, 'platetype_id', 'id');
-    }
 }

@@ -15,10 +15,8 @@ return new class extends Migration
     {
         Schema::create('productions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('platetype_id');
-            $table->foreign('platetype_id')->references('id')->on('platetypes_table');
-            $table->unsignedInteger('platedimension_id');
-            $table->foreign('platedimension_id')->references('id')->on('platedimensions_table');
+            $table->foreignId('plate_type_id')->constrained();
+            $table->foreignId('plate_dimension_id')->constrained();
             $table->integer('quantity');
             $table->integer('generate');
             $table->timestamp('manufacture_date')->useCurrent();

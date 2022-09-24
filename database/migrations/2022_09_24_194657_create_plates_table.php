@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('color');
             $table->string('dimensions');
-            $table->unsignedInteger('serialnumber_id');
-            $table->foreign('serialnumber_id')->references('id')->on('serialnumbers_table');
+            $table->foreignId('serial_number_id')->constrained();
             $table->timestamps();
         });
     }

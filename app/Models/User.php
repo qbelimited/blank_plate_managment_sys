@@ -57,9 +57,4 @@ class User extends Authenticatable
             get: fn ($value) =>  ["admin", "manufacturer", "dvla", "embosser"][$value],
         );
     }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
 }

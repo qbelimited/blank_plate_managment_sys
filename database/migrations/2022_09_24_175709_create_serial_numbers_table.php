@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('serialnumbers', function (Blueprint $table) {
+        Schema::create('serial_numbers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('production_id');
-            $table->foreign('production_id')->references('id')->on('productions_table');
+            $table->foreignId('production_id')->constrained();
             $table->string('serial');
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('serialnumbers');
+        Schema::dropIfExists('serial_numbers');
     }
 };
