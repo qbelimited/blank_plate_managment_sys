@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('company_id')->nullable();
             $table->tinyInteger('type')->default(0);
             /* Users: 0=>admin, 1=>manufacturer, 2=>dvla, 3=>embosser */
             $table->rememberToken();
