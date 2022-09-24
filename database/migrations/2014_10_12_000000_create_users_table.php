@@ -15,14 +15,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('fname');
+            $table->string('lname');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedInteger('company_id');
             $table->tinyInteger('type')->default(0);
             /* Users: 0=>admin, 1=>manufacturer, 2=>dvla, 3=>embosser */
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies_table');
         });
     }
 
