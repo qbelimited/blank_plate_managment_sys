@@ -53,14 +53,23 @@ class LoginController extends Controller
         ]);
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            if (auth()->user()->type == 'embosser') {
-                return redirect()->route('emb.home');
-            } else if (auth()->user()->type == 'manufacturer') {
-                return redirect()->route('man.home');
-            } else if (auth()->user()->type == 'dvla') {
-                return redirect()->route('dvla.home');
-            } else {
-                return redirect()->route('home');
+
+
+            if (auth()->user()->type == 'admin') {
+                switch (auth()->user()->type) {
+                    case 'embosser':
+                        $gothere = 'emb.home';
+                        break;
+                    case 'manufacturer':
+                        $gothere = 'man.home';
+                        break;
+                    case 'dvla':
+                        $gothere = 'dvla.home';
+                        break;
+                    default:
+                        $gothere = 'home';
+                }
+                return redirect()->route($gothere);
             }
         } else {
             return redirect()->route('login')
