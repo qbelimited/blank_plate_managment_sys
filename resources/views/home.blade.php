@@ -1,23 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.dash')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Super Admin Dashboard') }}</div>
+    <div>
+        <div class="card">
+            <h5 class="card-header">{{ __('Super Admin Dashboard') }}</h5>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <canvas id="piechart"></canvas>
+                    </div>
+                    <div class="col-auto">
+                        <canvas id="linech"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <hr>
 @endsection
