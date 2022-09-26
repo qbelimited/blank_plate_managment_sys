@@ -18,7 +18,8 @@ return new class extends Migration
             $table->foreignId('plate_type_id')->constrained();
             $table->foreignId('plate_dimension_id')->constrained();
             $table->integer('quantity');
-            $table->integer('generate');
+            $table->tinyInteger('job_status')->default(0);
+            $table->integer('serial_starts');
             $table->timestamp('manufacture_date')->useCurrent();
             $table->timestamps();
         });
