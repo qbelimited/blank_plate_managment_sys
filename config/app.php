@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'NPMS'),
+    'name' => env('APP_NAME', 'BPMS'),
 
     /*
     |--------------------------------------------------------------------------
@@ -222,5 +222,5 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-    "version" => env('APP_VERSION', '1.0'),
+    "version" => env('APP_VERSION', '1.0.0'),
 ];
