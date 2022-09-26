@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,7 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $id = Auth::user()->company_id;
+        $company = Company::find($id);
+
+        return view('home', compact('company'));
     }
 
     /**
@@ -36,7 +41,10 @@ class HomeController extends Controller
      */
     public function manHome()
     {
-        return view('manuf.Home');
+        $id = Auth::user()->company_id;
+        $company = Company::find($id);
+
+        return view('manuf.Home', compact('company'));
     }
 
     /**
@@ -47,7 +55,10 @@ class HomeController extends Controller
      */
     public function dvlaHome()
     {
-        return view('dvla.Home');
+        $id = Auth::user()->company_id;
+        $company = Company::find($id);
+
+        return view('dvla.Home', compact('company'));
     }
 
     /**
@@ -58,6 +69,9 @@ class HomeController extends Controller
      */
     public function embHome()
     {
-        return view('emboss.Home');
+        $id = Auth::user()->company_id;
+        $company = Company::find($id);
+
+        return view('emboss.Home', compact('company'));
     }
 }
