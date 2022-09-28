@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('plate_dimensions', function (Blueprint $table) {
             $table->id();
+            $table->string('description');
             $table->string('dimensions');
+            $table->string('code');
             $table->timestamps();
         });
     }

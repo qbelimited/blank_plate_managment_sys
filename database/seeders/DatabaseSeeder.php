@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CompaniesTableSeeder::class,
             UsersTableSeeder::class,
-            PlatetypesTableSeeder::class,
+            PlateColorsTableSeeder::class,
             PlatedimensionsTableSeeder::class,
         ]);
     }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('plate_type_id')->constrained();
             $table->foreignId('plate_dimension_id')->constrained();
+            $table->integer('batch_code');
             $table->integer('quantity');
             $table->tinyInteger('job_status')->default(0);
             $table->integer('serial_starts');

@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('plate_types', function (Blueprint $table) {
+        Schema::create('plate_colors', function (Blueprint $table) {
             $table->id();
             $table->string('color');
+            $table->string('code');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plate_types');
+        Schema::dropIfExists('plate_colors');
     }
 };
