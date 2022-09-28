@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             PlateColorsTableSeeder::class,
             PlatedimensionsTableSeeder::class,
+            ProductionweeksTableSeeder::class,
+            ProductionyearsTableSeeder::class,
         ]);
     }
 }
