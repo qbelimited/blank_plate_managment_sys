@@ -28,17 +28,17 @@ class PlateController extends Controller
         return view('home', compact('plate'));
     }
 
-    public function viewPlate($id)
-    {
-        $plate = Plate::find($id);
+    // public function viewPlate($id)
+    // {
+    //     $plate = Plate::find($id);
 
-        return view('home', compact('plate'));
-    }
+    //     return view('home', compact('plate'));
+    // }
 
-    public function searchPlate($id)
-    {
-        $plate = Plate::find($id);
+    // public function searchPlate($id)
+    // {
+    //     $plate = Plate::find($id);
 
-        return view('home', compact('plate'));
-    }
+    //     return view('home', compact('plate'));
+    // }
 }
