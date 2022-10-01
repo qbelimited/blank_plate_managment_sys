@@ -23,7 +23,7 @@ class LoginController extends Controller
             $token = Auth::user()->createToken('AuthToken')->accessToken;
             return response()->json(['user' => Auth::user(), 'token' => $token], 200);
         }else{
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Unauthorised user'], 401);
         }
     }
 }
