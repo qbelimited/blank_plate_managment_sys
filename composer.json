@@ -12,7 +12,8 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
         "phpmd/phpmd": "^2.13",
-        "sebastian/phpcpd": "^6.0"
+        "sebastian/phpcpd": "^6.0",
+        "yajra/laravel-datatables-oracle": "^10.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
