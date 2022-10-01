@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('plate_dimensions', function (Blueprint $table) {
+        Schema::create('production_weeks', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->string('dimensions');
             $table->string('code');
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plate_dimensions');
+        Schema::dropIfExists('production_weeks');
     }
 };
