@@ -54,17 +54,17 @@ class LoginController extends Controller
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             if (auth()->user()->type == 'embosser') {
-                return redirect()->route('emb.home');
+                return redirect()->route('emb.home')->with('successMsg', 'Successfully logged-in');
             } else if (auth()->user()->type == 'manufacturer') {
-                return redirect()->route('man.home');
+                return redirect()->route('man.home')->with('successMsg', 'Successfully logged-in');
             } else if (auth()->user()->type == 'dvla') {
-                return redirect()->route('dvla.home');
+                return redirect()->route('dvla.home')->with('successMsg', 'Successfully logged-in');
             } else {
-                return redirect()->route('home');
+                return redirect()->route('home')->with('successMsg', 'Successfully logged-in');
             }
         } else {
             return redirect()->route('login')
-                ->with('error', 'Email-Address And Password Are Wrong.');
+                ->with('errorMsg', 'Email-Address And Password Are Wrong.');
         }
     }
 }
