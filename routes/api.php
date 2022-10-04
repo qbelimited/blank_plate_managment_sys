@@ -19,7 +19,15 @@ use App\Http\Controllers\api\LoginController;
 //     return $request->user();
 // });
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 
 Route::prefix('/user/v1')->group(function(){
     Route::post('/login', [LoginController::class, 'login']);
+});
+
+Route::get('/greeting', function () {
+    return 'Hello World';
 });

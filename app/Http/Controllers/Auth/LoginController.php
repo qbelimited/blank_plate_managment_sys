@@ -52,19 +52,20 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            if (auth()->user()->type == 'embosser') {
-                return redirect()->route('emb.home');
-            } else if (auth()->user()->type == 'manufacturer') {
-                return redirect()->route('man.home');
-            } else if (auth()->user()->type == 'dvla') {
-                return redirect()->route('dvla.home');
-            } else {
-                return redirect()->route('home');
-            }
-        } else {
-            return redirect()->route('login')
-                ->with('error', 'Email-Address And Password Are Wrong.');
-        }
+        //  if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+        //     if (auth()->user()->hasRole('embosser')) {
+        //         return redirect()->route('emb.home');
+        //     } else if (auth()->user()->hasRole('manufacturer')) {
+        //         return redirect()->route('man.home');
+        //     } else if (auth()->user()->hasRole('dvla')) {
+        //         return redirect()->route('dvla.home');
+        //     } else {
+        //         return redirect()->route('home');
+        //     }
+        // } else {
+        //     return redirect()->route('login')
+        //         ->with('error', 'Email-Address And Password Are Wrong.');
+        // }
+
     }
 }

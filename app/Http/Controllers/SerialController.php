@@ -12,7 +12,7 @@ class SerialController extends Controller
         $start = DB::table('productions')->where('job_status', 0)->value('serial_starts');
         $quantity = DB::table('productions')->where('job_status', 0)->value('quantity');
 
-        $end = $start + $quantity - 1;
+        $end = $start + $quantity;
 
         $numbers = range($start, $end, 1);
 

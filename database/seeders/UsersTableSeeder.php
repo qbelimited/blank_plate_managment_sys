@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,9 +14,52 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        User::create([
+    public function run(){
+
+        // User::create([
+        //     'fname' => 'Admin',
+        //     'lname' => 'Super',
+        //     'email' => 'admin@admin.com',
+        //     'password' => bcrypt('admin1234'),
+        //     'type' => '0',
+        //     'company_id' => '1',
+        // ]);
+
+        // User::create([
+        //     'fname' => 'Manufacturer',
+        //     'lname' => 'Admin',
+        //     'email' => 'manf@admin.com',
+        //     'password' => bcrypt('admin1234'),
+        //     'type' => '1',
+        //     'company_id' => '1',
+        // ]);
+
+        // User::create([
+        //     'fname' => 'Dvla',
+        //     'lname' => 'Admin',
+        //     'email' => 'dvla@admin.com',
+        //     'password' => bcrypt('admin1234'),
+        //     'type' => '2',
+        //     'company_id' => '1',
+        // ]);
+
+        // User::create([
+        //     'fname' => 'Embosser',
+        //     'lname' => 'Admin',
+        //     'email' => 'emboss@admin.com',
+        //     'password' => bcrypt('admin1234'),
+        //     'type' => '3',
+        //     'company_id' => '1',
+        // ]);
+
+        //get all permissions
+        $permissions = Permission::pluck('id', 'id')->all();
+
+        //create the manufacturer role
+        $admin = Role::create(['name' => 'Admin']);
+        $admin->syncPermissions($permissions);
+
+        $user = User::create([
             'fname' => 'Admin',
             'lname' => 'Super',
             'email' => 'admin@admin.com',
@@ -23,7 +68,14 @@ class UsersTableSeeder extends Seeder
             'company_id' => '1',
         ]);
 
-        User::create([
+        $user->assignRole([$admin->id]);
+
+
+        //create the manufacturer role
+        $manufacturer_role = Role::create(['name' => 'Manufacturer']);
+        $manufacturer_role->syncPermissions($permissions);
+
+        $user = User::create([
             'fname' => 'Manufacturer',
             'lname' => 'Admin',
             'email' => 'manf@admin.com',
@@ -32,7 +84,14 @@ class UsersTableSeeder extends Seeder
             'company_id' => '1',
         ]);
 
-        User::create([
+        $user->assignRole([$manufacturer_role->id]);
+
+
+        //create the dvla role
+        $dvla_role = Role::create(['name' => 'Dvla']);
+        $dvla_role->syncPermissions($permissions);
+
+        $user = User::create([
             'fname' => 'Dvla',
             'lname' => 'Admin',
             'email' => 'dvla@admin.com',
@@ -41,7 +100,13 @@ class UsersTableSeeder extends Seeder
             'company_id' => '1',
         ]);
 
-        User::create([
+        $user->assignRole([$dvla_role->id]);
+
+        //create the Embosser role
+        $embosser_role = Role::create(['name' => 'Embosser']);
+        $embosser_role->syncPermissions($permissions);
+
+        $user =  User::create([
             'fname' => 'Embosser',
             'lname' => 'Admin',
             'email' => 'emboss@admin.com',
@@ -49,5 +114,7 @@ class UsersTableSeeder extends Seeder
             'type' => '3',
             'company_id' => '1',
         ]);
+
+        $user->assignRole([$embosser_role->id]);
     }
 }

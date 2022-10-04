@@ -12,8 +12,10 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
+        "laravelcollective/html": "^6.3",
         "phpmd/phpmd": "^2.13",
-        "sebastian/phpcpd": "^6.0"
+        "sebastian/phpcpd": "^6.0",
+        "spatie/laravel-permission": "^5.5"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
