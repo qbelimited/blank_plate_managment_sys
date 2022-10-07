@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('company_id')->constrained();
             $table->tinyInteger('type')->default(0);
+            $table->string('phone1')->unique()->nullable();
+            $table->string('phone2')->unique()->nullable();
+            $table->string('national_id')->unique();
             /* Users: 0=>admin, 1=>manufacturer, 2=>dvla, 3=>embosser */
             $table->rememberToken();
             $table->timestamps();

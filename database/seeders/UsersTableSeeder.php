@@ -66,6 +66,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('admin1234'),
             'type' => '0',
             'company_id' => '1',
+            'national_id' => 'gha-0002'
         ]);
 
         $user->assignRole([$admin->id]);
@@ -82,6 +83,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('admin1234'),
             'type' => '1',
             'company_id' => '1',
+            'national_id' => 'gha-0003'
         ]);
 
         $user->assignRole([$manufacturer_role->id]);
@@ -98,6 +100,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('admin1234'),
             'type' => '2',
             'company_id' => '1',
+            'national_id' => 'gha-0004'
         ]);
 
         $user->assignRole([$dvla_role->id]);
@@ -113,6 +116,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('admin1234'),
             'type' => '3',
             'company_id' => '1',
+            'national_id' => 'gha-0005'
         ]);
 
         $user->assignRole([$embosser_role->id]);
