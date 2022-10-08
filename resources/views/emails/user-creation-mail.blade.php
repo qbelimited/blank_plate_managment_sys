@@ -11,6 +11,6 @@
     Click to get Started
   @endcomponent
 
-  Best regards,<br>Company secretary
+  Best regards,<br>Company Name Here
   {{-- {{config(app.name)}} --}}
 @endcomponent

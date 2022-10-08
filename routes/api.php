@@ -30,6 +30,8 @@ Route::prefix('/user/v1')->group(function(){
     Route::post('/login', [LoginController::class, 'login']);
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('/register', [RegisterController::class, 'register']);
+        Route::post('/update-user', [RegisterController::class, 'updateUser']);
+        
     });
     
 });
