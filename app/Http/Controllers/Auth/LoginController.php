@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -52,20 +53,21 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        //  if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-        //     if (auth()->user()->hasRole('embosser')) {
-        //         return redirect()->route('emb.home');
-        //     } else if (auth()->user()->hasRole('manufacturer')) {
-        //         return redirect()->route('man.home');
-        //     } else if (auth()->user()->hasRole('dvla')) {
-        //         return redirect()->route('dvla.home');
-        //     } else {
-        //         return redirect()->route('home');
-        //     }
-        // } else {
-        //     return redirect()->route('login')
-        //         ->with('error', 'Email-Address And Password Are Wrong.');
-        // }
+         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+            if (auth()->user()->hasRole('Embosser')) {
+                return redirect()->route('emb.home');
+            } else if (auth()->user()->hasRole('Manufacturer')) {
+                return redirect()->route('man.home');
+            } else if (auth()->user()->hasRole('Dvla')) {
+                return redirect()->route('dvla.home');
+            } else {
+                return redirect()->route('home');
+            }
+        } else {
+            return redirect()->route('login')
+                ->with('error', 'Email-Address And Password Are Wrong.');
+        }
+
 
     }
 }

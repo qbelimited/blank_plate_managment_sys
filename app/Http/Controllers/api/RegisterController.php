@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\UserCreationMail;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -23,7 +27,6 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), [
             'fname' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
             'national_id' => 'unique:users|required',
             'role_id' => 'required',
         ]);
@@ -37,8 +40,11 @@ class RegisterController extends Controller
             //get all request
             $input = $request->all();
 
+            
+            // generate a random password for the user
+            $randomPassword = Str::random(10);
             //decrypt the password
-            $input['password'] = bcrypt($input['password']);
+            $input['password'] = bcrypt($randomPassword);
 
             //now create the user
             $user = User::create($input);
@@ -47,6 +53,16 @@ class RegisterController extends Controller
             // $admin = Role::create(['name' => 'Admin3']);
             $role = Role::find($request->role_id);
             $user->assignRole([$role]);
+
+            //message to be sent to the user
+            $details = [
+                    'title' => 'Dear ' . $user->fname.' '.$user->lname,
+                    'body' => 'An active account has been created for you. Use your email and  your secret password ' . $randomPassword . ' to login',
+                    'url' => env("APP_URL") . '/login'
+                ];
+
+            Mail::to($request['email'])->send(new UserCreationMail($details));
+
             return response()->json(['response_code'=>'200','message'=>'user created successfully']);
         }
     }

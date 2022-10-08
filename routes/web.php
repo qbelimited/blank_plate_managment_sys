@@ -86,3 +86,5 @@ Route::group(['middleware' => ['role:Embosser']], function () {
     Route::get('/dvla/home', [App\Http\Controllers\HomeController::class, 'dvlaHome'])->name('dvla.home');
     Route::get('/dvla/plates', [App\Http\Controllers\HomeController::class, 'dvlaHome'])->name('dvla.plate');
 });
+
+
