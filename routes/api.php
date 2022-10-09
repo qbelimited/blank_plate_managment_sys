@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\RegisterController;
 
@@ -30,7 +31,8 @@ Route::prefix('/user/v1')->group(function(){
     Route::post('/login', [LoginController::class, 'login']);
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('/register', [RegisterController::class, 'register']);
-        Route::post('/update-user', [RegisterController::class, 'updateUser']);
+        Route::post('/update-user', [UserController::class, 'updateUser']);
+        Route::get('/get-users', [UserController::class, 'getUsers']);
         
     });
     
