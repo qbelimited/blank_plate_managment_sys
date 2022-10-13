@@ -96,4 +96,17 @@ class UserController extends Controller
         
     }
 
+    //get the details of a single user
+    public function getUser(Request $request){
+
+        //get the user and return 
+        $user = User::where('id', $request->id)->with('roles')->first();
+        if($user){
+            return response()->json(['users' => $user,'response_code'=>'200','message'=>'User details']);
+        }else{
+            return response()->json(['response_code'=>'401','message'=>'User does not exist']);
+        }
+
+    }
+
 }

@@ -31,12 +31,24 @@ use App\Http\Controllers\Api\Auth\PasswordResetController;
 Route::prefix('/user/v1')->group(function(){
     Route::post('/login', [LoginController::class, 'login']);
     Route::group(['middleware' => ['auth:api']], function () {
+
+        //for registering a new user
         Route::post('/register', [RegisterController::class, 'register']);
-        Route::post('/update-user', [UserController::class, 'updateUser']);
+
+        //updating an existing user 
+        Route::put('/update-user', [UserController::class, 'updateUser']);
+
+        //for get all users in the system
         Route::get('/get-users', [UserController::class, 'getUsers']);
+
+        //for deactiving a user
         Route::post('/deactivate-user', [UserController::class, 'deactivate']);
+
+        //reset user password
         Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
-        
+
+        //get a single user
+        Route::get('/get-user/{id}', [UserController::class, 'getUser']);
         
     });
     
