@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('phone1')->unique()->nullable();
             $table->string('phone2')->unique()->nullable();
             $table->string('national_id')->unique();
+            $table->string('status')->default(1);
             /* Users: 0=>admin, 1=>manufacturer, 2=>dvla, 3=>embosser */
             $table->rememberToken();
             $table->timestamps();

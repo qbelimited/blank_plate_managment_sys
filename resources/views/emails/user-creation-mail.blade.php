@@ -11,6 +11,6 @@
     Click to get Started
   @endcomponent
 
-  Best regards,<br>Company Name Here
+  Best regards,<br>Number Plate Management System
   {{-- {{config(app.name)}} --}}
 @endcomponent

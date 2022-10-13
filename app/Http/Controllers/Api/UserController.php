@@ -14,13 +14,8 @@ class UserController extends Controller
 {
     //update user function
     public function updateUser(Request $request){
-        
-        //check for permission
-        // $user = User::find($request->posted_by);
-        // if(!$user->hasRole('Admin')){
-        //     return response()->json(['response_code'=>'401','message'=>'user does not have permission to create users']);
-        // }
 
+        
         //check for permission
         if(!Auth::user()->hasRole('Admin')){
             return response()->json(['response_code'=>'401','message'=>'user does not have permission to update users']);
@@ -83,4 +78,22 @@ class UserController extends Controller
 
         return response()->json(['users' => User::with('roles')->paginate(15),'response_code'=>'200','message'=>'All users']);
     }
+
+    //deactivate user
+    public function deactivate(Request $id){
+        //get the user and set status to 0 {0,inactive}
+        $user = User::find($id->id);
+        $user->status = 0;
+        $ok = $user->save();
+
+        //if success then return success message
+        if($ok){
+           return response()->json(['response_code'=>'200','message'=>'User deactivated']); 
+        }else{
+            return response()->json(['response_code'=>'400','message'=>'An issue occurred, user not deactivated']); 
+        }
+
+        
+    }
+
 }
