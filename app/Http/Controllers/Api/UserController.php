@@ -15,11 +15,6 @@ class UserController extends Controller
     //update user function
     public function updateUser(Request $request){
 
-        
-        //check for permission
-        if(!Auth::user()->hasRole('Admin')){
-            return response()->json(['response_code'=>'401','message'=>'user does not have permission to update users']);
-        }
 
 
         //validate user entry
@@ -71,11 +66,6 @@ class UserController extends Controller
     //this function gets all users and their roles
     public function getUsers(){
 
-        //check for permission
-        if(!Auth::user()->hasRole('Admin')){
-            return response()->json(['response_code'=>'401','message'=>'user does not have permission to view users']);
-        }
-
         return response()->json(['users' => User::with('roles')->paginate(15),'response_code'=>'200','message'=>'All users']);
     }
 
@@ -100,7 +90,7 @@ class UserController extends Controller
     public function getUser(Request $request){
 
         //get the user and return 
-        $user = User::where('id', $request->id)->with('roles')->first();
+        $user = User::where('id', $request->id)->with('roles','company')->first();
         if($user){
             return response()->json(['users' => $user,'response_code'=>'200','message'=>'User details']);
         }else{

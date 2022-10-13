@@ -19,6 +19,7 @@ class Company extends Model
         'location',
         'phone',
         'email',
+        'status'
     ];
 
     public function users()

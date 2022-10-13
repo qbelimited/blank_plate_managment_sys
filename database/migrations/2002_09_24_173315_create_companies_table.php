@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('location');
             $table->string('phone')->unique();
             $table->string('email')->unique();
+            $table->boolean('status')->default(1);
+            /** status 1=>active 0=>inactive */
             $table->timestamps();
         });
     }

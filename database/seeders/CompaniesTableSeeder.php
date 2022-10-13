@@ -19,7 +19,8 @@ class CompaniesTableSeeder extends Seeder
             'name' => 'Demo Company',
             'location'=> 'Tema',
             'phone'=>'905030333',
-            'email'=>'demo@gmail.com'
+            'email'=>'demo@gmail.com',
+            'status' => 1
         ]);
     }
 }

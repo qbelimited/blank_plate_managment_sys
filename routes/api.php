@@ -43,13 +43,15 @@ Route::prefix('/user/v1')->group(function(){
         *{/Register, for adding new users},{/reset-password, for changing user password}
         *{/get-user/{id}, for retriving asing users},{/logout, for unauthenticating user}
         /****************************************************************/
+        Route::group(['middleware' => ['role:Admin']], function () {
             Route::post('/register', [RegisterController::class, 'register']);
-            Route::put('/update-user', [UserController::class, 'updateUser']);
+            Route::post('/update-user', [UserController::class, 'updateUser']);
             Route::get('/get-users', [UserController::class, 'getUsers']);
             Route::post('/deactivate-user', [UserController::class, 'deactivate']);
             Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
             Route::get('/get-user/{id}', [UserController::class, 'getUser']);
             Route::post('/logout', [LogoutController::class, 'logout']);
+        });
 
         /*********************************************************************
          * END OF USER MANAGEMENT ROUTES
@@ -58,9 +60,17 @@ Route::prefix('/user/v1')->group(function(){
 
         /******************************************************************************
          * COMPANY ROUTES, ALL ROUTES HERE ARE RESPONSIBLE FOR COMPANY MANAGEMENT
-         *{/add-company, for adding new companys}
+         *{/add-company, for adding new companys},{/update-company, for updating company details}
+         *{/all-companies, returns all companies}
          ********************************************************************************/
-        Route::post('/add-company', [CompanyController::class, 'addCompany']);
+        Route::group(['middleware' => ['role:Admin']], function () {
+            Route::post('/add-company', [CompanyController::class, 'addCompany']);
+            Route::post('/update-company', [CompanyController::class, 'updateCompany']);
+            Route::get('/get-companies', [CompanyController::class, 'getCompanies']);
+            Route::post('/deactivate-company', [CompanyController::class, 'deactivateCompany']);
+            Route::post('/activate-company', [CompanyController::class, 'activateCompany']);
+        });    
+        
 
     });
     
