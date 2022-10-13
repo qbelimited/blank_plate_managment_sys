@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Mail\UserActivation;
 use Illuminate\Http\Request;
+use App\Mail\UserDeactivation;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -78,7 +81,45 @@ class UserController extends Controller
 
         //if success then return success message
         if($ok){
+
+            //message to be sent to the user
+            $details = [
+                'title' => 'Dear ' . $user->fname.' '.$user->lname,
+                'body' => 'Your account for number plate management system has been deactivated. Contact the administrator for more details',
+                'url' => env("APP_URL") . '/login'
+            ];
+
+           Mail::to($user->email)->send(new UserDeactivation($details));
+
            return response()->json(['response_code'=>'200','message'=>'User deactivated']); 
+        }else{
+            return response()->json(['response_code'=>'400','message'=>'An issue occurred, user not deactivated']); 
+        }
+
+        
+    }
+
+    //activate user
+    public function activate(Request $id){
+
+        //get the user and set status to 0 {0,inactive}
+        $user = User::find($id->id);
+        $user->status = 1;
+        $ok = $user->save();
+
+        //if success then return success message
+        if($ok){
+
+            //message to be sent to the user
+            $details = [
+                'title' => 'Dear ' . $user->fname.' '.$user->lname,
+                'body' => 'Your account for number plate management system has been activated. Contact the administrator for more details',
+                'url' => env("APP_URL") . '/login'
+            ];
+
+           Mail::to($user->email)->send(new UserActivation($details));
+
+           return response()->json(['response_code'=>'200','message'=>'User Activated']); 
         }else{
             return response()->json(['response_code'=>'400','message'=>'An issue occurred, user not deactivated']); 
         }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('dimensions');
             $table->string('code');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('plate_colors', function (Blueprint $table) {
             $table->id();
-            $table->string('color');
-            $table->string('code');
+            $table->string('color')->unique();
+            $table->string('code')->unique();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

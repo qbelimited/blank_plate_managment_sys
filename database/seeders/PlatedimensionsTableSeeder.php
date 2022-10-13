@@ -18,18 +18,21 @@ class PlatedimensionsTableSeeder extends Seeder
             'description' => 'Long',
             'dimensions' => '520*112',
             'code' => 'A',
+            'status'=> 1
         ]);
 
         PlateDimension::create([
             'description' => 'Oblong 1',
             'dimensions' => '340*160',
             'code' => 'B',
+            'status'=> 1
         ]);
 
         PlateDimension::create([
             'description' => 'Oblong 2',
             'dimensions' => '260*160',
             'code' => 'C',
+            'status'=> 1
         ]);
     }
 }

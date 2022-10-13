@@ -85,7 +85,7 @@ class CompanyController extends Controller
     //get all companies
     public function getCompanies(){
         //get all companies
-        return response()->json(['company' => Company::all(),'response_code'=>'200','message'=>'Company Updated']);
+        return response()->json(['companies' => Company::all(),'response_code'=>'200','message'=>'All Companies']);
     }
 
     //deactivate company

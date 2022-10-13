@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class PlateDimension extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'description',
+        'dimensions',
+        'code',
+        'status'
+    ];
 }
