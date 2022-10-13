@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 
@@ -49,6 +50,9 @@ Route::prefix('/user/v1')->group(function(){
 
         //get a single user
         Route::get('/get-user/{id}', [UserController::class, 'getUser']);
+
+        //logout a user
+        Route::post('/logout', [LogoutController::class, 'logout']);
         
     });
     
