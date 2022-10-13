@@ -66,5 +66,12 @@ class User extends Authenticatable
         );
     }
 
+
+    //establishing relationshiip
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     
 }

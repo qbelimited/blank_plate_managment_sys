@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Company\CompanyController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 
 /*
@@ -31,29 +32,36 @@ use App\Http\Controllers\Api\Auth\PasswordResetController;
 //api routes 
 Route::prefix('/user/v1')->group(function(){
     Route::post('/login', [LoginController::class, 'login']);
+    
     Route::group(['middleware' => ['auth:api']], function () {
 
-        //for registering a new user
-        Route::post('/register', [RegisterController::class, 'register']);
+        /****************************************************************
+        *ALL ROUTES BELOW LOGIN TO USER AUTHENTICATION AND USER MANAGEMENT
+        *
+        *{/Register, for adding new users},{/update-user, for updating users details}
+        *{/get-users, retrieve all users},{/deactivate-user, for making user inactive}
+        *{/Register, for adding new users},{/reset-password, for changing user password}
+        *{/get-user/{id}, for retriving asing users},{/logout, for unauthenticating user}
+        /****************************************************************/
+            Route::post('/register', [RegisterController::class, 'register']);
+            Route::put('/update-user', [UserController::class, 'updateUser']);
+            Route::get('/get-users', [UserController::class, 'getUsers']);
+            Route::post('/deactivate-user', [UserController::class, 'deactivate']);
+            Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
+            Route::get('/get-user/{id}', [UserController::class, 'getUser']);
+            Route::post('/logout', [LogoutController::class, 'logout']);
 
-        //updating an existing user 
-        Route::put('/update-user', [UserController::class, 'updateUser']);
-
-        //for get all users in the system
-        Route::get('/get-users', [UserController::class, 'getUsers']);
-
-        //for deactiving a user
-        Route::post('/deactivate-user', [UserController::class, 'deactivate']);
-
-        //reset user password
-        Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
-
-        //get a single user
-        Route::get('/get-user/{id}', [UserController::class, 'getUser']);
-
-        //logout a user
-        Route::post('/logout', [LogoutController::class, 'logout']);
+        /*********************************************************************
+         * END OF USER MANAGEMENT ROUTES
+         *********************************************************************/
         
+
+        /******************************************************************************
+         * COMPANY ROUTES, ALL ROUTES HERE ARE RESPONSIBLE FOR COMPANY MANAGEMENT
+         *{/add-company, for adding new companys}
+         ********************************************************************************/
+        Route::post('/add-company', [CompanyController::class, 'addCompany']);
+
     });
     
 });

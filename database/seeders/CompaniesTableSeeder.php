@@ -17,6 +17,9 @@ class CompaniesTableSeeder extends Seeder
     {
         Company::create([
             'name' => 'Demo Company',
+            'location'=> 'Tema',
+            'phone'=>'905030333',
+            'email'=>'demo@gmail.com'
         ]);
     }
 }
