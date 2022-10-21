@@ -208,7 +208,7 @@ Route::prefix('/npms/v1')->group(function(){
          ********************************************************************************/
          Route::group(['middleware' => ['role:Admin|Dvla']], function () {
             Route::get('/get-all-plates', [PlateController::class, 'getNumbrPlates']);
-            Route::get('/get-plate/{name}', [PlateController::class, 'getPlate']);
+            Route::post('/get-plate', [PlateController::class, 'getPlate']);
          }); 
 
          /**********************************************************************
