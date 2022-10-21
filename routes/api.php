@@ -32,7 +32,7 @@ use App\Http\Controllers\Api\Settings\PlateSettingsController;
 
 
 //api routes 
-Route::prefix('/user/v1')->group(function(){
+Route::prefix('/npms/v1')->group(function(){
     Route::post('/login', [LoginController::class, 'login']);
     
     Route::group(['middleware' => ['auth:api']], function () {
@@ -148,7 +148,15 @@ Route::prefix('/user/v1')->group(function(){
          *********************************************************************/
 
 
-         Route::post('/add-production', [PlateController::class, 'addPlateProductionBatch']);
+
+         Route::group(['middleware' => ['role:Admin|Manufacturer']], function () {
+            Route::post('/add-production', [PlateController::class, 'addPlateProductionBatch']);
+         });  
+         Route::group(['middleware' => ['role:Admin|Manufacturer|Dvla']], function () {
+            Route::get('/get-all-production', [PlateController::class, 'getAllProduction']);
+         });
+         
+         
          
 
 

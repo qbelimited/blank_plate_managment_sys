@@ -53,4 +53,10 @@ class PlateController extends Controller
         }
 
     }
+
+    //get all the production years
+    public function getAllProduction(){
+        //get all production years
+        return response()->json(['production years' => Production::all(),'response_code'=>'200','message'=>'All production']);
+    }
 }
