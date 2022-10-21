@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('production_week_id')->constrained();
             $table->foreignId('production_year_id')->constrained();
             $table->timestamp('manufacture_date')->useCurrent();
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }

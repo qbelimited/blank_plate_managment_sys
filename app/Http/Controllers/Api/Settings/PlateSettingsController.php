@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\Settings;
 
+use App\Models\Embosser;
 use App\Models\Platecolor;
 use Illuminate\Http\Request;
+use App\Models\EmbosserColor;
 use App\Models\Platedimension;
 use App\Models\Productionweek;
 use App\Models\Productionyear;
@@ -101,6 +103,96 @@ class PlateSettingsController extends Controller
         $ok = $platecolor->save();
         if($ok){
             return response()->json(['plate color' => $platecolor,'response_code'=>'200','message'=>'Plate Color Activated']);
+        }
+    }
+
+
+    /**
+     * PLATE EMBOSSER COLOR SETTINGS
+     */
+
+    //add color
+    public function addEmbosserColor(Request $request){
+        
+           //validate user entry
+            $validator = Validator::make($request->all(), [
+                'color' => 'required|unique:embosser_colors',
+                'code' => 'required|unique:embosser_colors',
+            ]);
+
+             //if the validation fails return error
+        if($validator->fails()){
+            return $validator->messages();
+        }else{
+            
+                //now create the embosser color
+                $embosserColor = EmbosserColor::create($request->all());
+
+                //if creation is a success return return success
+                if($embosserColor){
+                    return response()->json(['embosser color' => $embosserColor,'response_code'=>'200','message'=>'Embosser Color Added']);
+                }else{
+                    return response()->json(['response_code'=>'401','message'=>'Something went wrong, try again or contact admin']);
+                }
+        }
+    }
+
+    //add edit color
+    public function updateEmbosserColor(Request $request){
+        
+        //validate user entry
+        $validator = Validator::make($request->all(), [
+                'color' => [
+                    'required',
+                    Rule::unique('embosser_colors')->ignore($request->id),
+                ],
+                'code' => [
+                    'required',
+                    Rule::unique('embosser_colors')->ignore($request->id),
+                ],
+        ]);
+                
+
+        //if the validation fails return error
+        if($validator->fails()){
+                return $validator->messages();
+        }else{
+                
+                //now update the embosser color
+                $embosserColor = EmbosserColor::find($request->id)->update($request->all());
+
+                //if update is a success return return success
+                if($embosserColor){
+                    return response()->json(['response_code'=>'200','message'=>'Embosser Color Updated']);
+                }else{
+                    return response()->json(['response_code'=>'401','message'=>'Something went wrong, try again or contact admin']);
+                }
+        }
+    }
+
+    //get all the embosser colors
+    public function getEmbosserColors(){
+        //get all embosser colors
+        return response()->json(['embosser colors' => EmbosserColor::all(),'response_code'=>'200','message'=>'All embosser colors']);
+    }
+
+    //deactivate plate color
+    public function deactivateEmbosserColor(Request $request){
+        $embosserColor = EmbosserColor::find($request->id);
+        $embosserColor->status = 0;
+        $ok = $embosserColor->save();
+        if($ok){
+            return response()->json(['embosser color' => $embosserColor,'response_code'=>'200','message'=>'Embosser Color Deactivated']);
+        }
+    }
+
+    //activate embosser color
+    public function activateEmbosserColor(Request $request){
+        $embosserColor = EmbosserColor::find($request->id);
+        $embosserColor->status = 1;
+        $ok = $embosserColor->save();
+        if($ok){
+            return response()->json(['embosser color' => $embosserColor,'response_code'=>'200','message'=>'Embosser Color Activated']);
         }
     }
 

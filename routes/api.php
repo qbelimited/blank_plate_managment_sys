@@ -97,6 +97,24 @@ Route::prefix('/npms/v1')->group(function(){
          *********************************************************************/
 
 
+         
+         /******************************************************************************
+         * EMBOSSER COLOR ROUTES, ALL ROUTES HERE ARE RESPONSIBLE FOR EMBOSSER COLRS
+         *{/add-embosser-color, for adding embosser colors},{/update-embosser-color, for updating embosser colors}
+         *{/get-embosser-colors, gets all embosser colors},{/deactivate-embosser-color,deactivates the embosser color},{/activate-embosser-color, activates the embosser color},
+         ********************************************************************************/
+            Route::group(['middleware' => ['role:Admin|Manufacturer']], function () {
+                Route::post('/add-embosser-color', [PlateSettingsController::class, 'addEmbosserColor']);
+                Route::post('/update-embosser-color', [PlateSettingsController::class, 'updateEmbosserColor']);
+                Route::get('/get-embosser-colors', [PlateSettingsController::class, 'getEmbosserColors']);
+                Route::post('/deactivate-embosser-color', [PlateSettingsController::class, 'deactivateEmbosserColor']);
+                Route::post('/activate-embosser-color', [PlateSettingsController::class, 'activateEmbosserColor']);
+            });   
+        /**********************************************************************
+         * END OF PLATE COLORS ROUTES
+         *********************************************************************/
+
+
         /******************************************************************************
          * PLATE DIMENSION ROUTES, ALL ROUTES HERE ARE RESPONSIBLE FOR PLATE DIMENSIONS
          *{/add-plate-dimension, for adding plate dimensions},{/update-plate-dimensions, for updating plate dimensions}

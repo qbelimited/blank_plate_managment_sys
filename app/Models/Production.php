@@ -19,6 +19,7 @@ class Production extends Model
         'production_week_id',
         'production_year_id',
         'manufacture_date',
+        'status'
     ];
 
             
