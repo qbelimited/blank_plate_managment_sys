@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Embosser extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'plate_id',
+        'embosser_color_id',
+        'serial_number_id',
+        'embosser_text',
+        'status'
+    ];
 }

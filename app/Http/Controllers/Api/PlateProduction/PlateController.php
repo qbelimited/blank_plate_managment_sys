@@ -20,7 +20,7 @@ class PlateController extends Controller
         $validator = Validator::make($request->all(), [
             'plate_color_id' => 'required',
             'plate_dimension_id' =>  'required',
-            'batch_code' => 'required|integer',
+            'batch_code' => 'required|integer|unique:productions',
             'quantity' => 'required|integer',
             'serial_starts' => 'required|integer'
         ]);

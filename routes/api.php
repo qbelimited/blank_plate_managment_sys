@@ -2,13 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PlateProduction\PlateController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Company\CompanyController;
+use App\Http\Controllers\Api\Embosser\EmbosserController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
+use App\Http\Controllers\Api\PlateProduction\PlateController;
 use App\Http\Controllers\Api\Settings\PlateSettingsController;
 
 /*
@@ -167,12 +168,37 @@ Route::prefix('/npms/v1')->group(function(){
 
 
 
+         /******************************************************************************
+         * PRODUCTION OF NUMBER PLATE BATCHES, ALL ROUTES HERE ARE RESPONSIBLE FOR NUMBER PLATE BATCHES
+         *{/add-production, for creating number plate batches},{/get-all-production, for retriving all the batches}
+         ********************************************************************************/
          Route::group(['middleware' => ['role:Admin|Manufacturer']], function () {
             Route::post('/add-production', [PlateController::class, 'addPlateProductionBatch']);
          });  
          Route::group(['middleware' => ['role:Admin|Manufacturer|Dvla']], function () {
             Route::get('/get-all-production', [PlateController::class, 'getAllProduction']);
          });
+
+         /**********************************************************************
+         * END OF NUMBER PLATE BATCHES
+         *********************************************************************/
+
+
+
+         /******************************************************************************
+         * EMBOSSER ROUTES, ALL ROUTES HERE ARE RESPONSIBLE FOR EMBOSSER FUNCTIONS
+         *{/add-production, for creating number plate batches},{/get-all-production, for retriving all the batches}
+         ********************************************************************************/
+         Route::group(['middleware' => ['role:Admin|Embosser|Dvla']], function () {
+            Route::post('/emboss-plate', [EmbosserController::class, 'embossPlate']);
+            Route::get('/get-all-embossed', [EmbosserController::class, 'getAllEmbossed']);
+            Route::post('/update-embossed-plate', [EmbosserController::class, 'updateEmbossedPlate']);
+            
+         }); 
+
+         /**********************************************************************
+         * END OF NUMBER PLATE BATCHES
+         *********************************************************************/
          
          
          
