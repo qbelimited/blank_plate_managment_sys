@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use Carbon\Carbon;
 use App\Models\Plate;
-use App\Models\PlateDimension;
+use App\Models\Company;
 use App\Models\PlateColor;
+use App\Models\Production;
+use Illuminate\Http\Request;
+use App\Models\PlateDimension;
+use App\Models\Productionweek;
+use App\Models\Productionyear;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PlateController extends Controller
 {
+
     public function allPlate()
     {
         $plates = Plate::all();

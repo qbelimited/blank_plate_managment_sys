@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('production_years', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->string('code');
+            $table->string('code')->unique();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

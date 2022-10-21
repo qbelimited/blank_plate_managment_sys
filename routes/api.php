@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\PlateProduction\PlateController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
@@ -84,7 +85,7 @@ Route::prefix('/user/v1')->group(function(){
          *{/add-plate-color, for adding plate colors},{/update-plate-color, for updating plate colors}
          *{/get-plate-colors, gets all plate colors},{/deactivate-plate-color,deactivates the plate color},{/activate-plate-color, activates the plate color},
          ********************************************************************************/
-            Route::group(['middleware' => ['role:Admin']], function () {
+            Route::group(['middleware' => ['role:Admin|Manufacturer']], function () {
                 Route::post('/add-plate-color', [PlateSettingsController::class, 'addPlateColor']);
                 Route::post('/update-plate-color', [PlateSettingsController::class, 'updatePlateColor']);
                 Route::get('/get-plate-colors', [PlateSettingsController::class, 'getPlateColors']);
@@ -101,7 +102,7 @@ Route::prefix('/user/v1')->group(function(){
          *{/add-plate-dimension, for adding plate dimensions},{/update-plate-dimensions, for updating plate dimensions}
          *{/get-plate-dimensions, gets all plate dimensions},{/deactivate-plate-dimension,deactivates the plate dimensions},{/activate-plate-dimensions, activates the plate dimensions},
          ********************************************************************************/
-            Route::group(['middleware' => ['role:Admin']], function () {
+            Route::group(['middleware' => ['role:Admin|Manufacturer']], function () {
                 Route::post('/add-plate-dimension', [PlateSettingsController::class, 'addPlateDimension']);
                 Route::post('/update-plate-dimension', [PlateSettingsController::class, 'updatePlateDimension']);
                 Route::get('/get-plate-dimensions', [PlateSettingsController::class, 'getPlateDimensions']);
@@ -109,8 +110,46 @@ Route::prefix('/user/v1')->group(function(){
                 Route::post('/activate-plate-dimension', [PlateSettingsController::class, 'activatePlateDimension']);
             });   
         /**********************************************************************
-         * END OF PLATE COLORS ROUTES
+         * END OF PLATE DIMENSION ROUTES
          *********************************************************************/
+
+
+         /******************************************************************************
+         * PRODUCTION WEEK ROUTES, ALL ROUTES HERE ARE RESPONSIBLE FOR PLATE DIMENSIONS
+         *{/add-production-week, for adding production weeks},{/update-production-week, for updating the production weeks}
+         *{/get-production-weeks, gets all production weeks},{/deactivate-production-week,makes a production week inactive},{/activate-production-week, activates the production week},
+         ********************************************************************************/
+            Route::group(['middleware' => ['role:Admin|Manufacturer']], function () {
+                Route::post('/add-production-week', [PlateSettingsController::class, 'addProductionWeek']);
+                Route::post('/update-production-week', [PlateSettingsController::class, 'updateProductionWeek']);
+                Route::get('/get-production-weeks', [PlateSettingsController::class, 'getProductionWeeks']);
+                Route::post('/deactivate-production-week', [PlateSettingsController::class, 'deactivateProductionWeek']);
+                Route::post('/activate-production-week', [PlateSettingsController::class, 'activateProductionWeek']);
+            });   
+        /**********************************************************************
+         * END OF PRODUCTION WEEK ROUTES
+         *********************************************************************/
+
+
+         /******************************************************************************
+         * PRODUCTION YEAR ROUTES, ALL ROUTES HERE ARE RESPONSIBLE FOR PLATE DIMENSIONS
+         *{/add-production-year, for adding production years},{/update-production-year, for updating the production years}
+         *{/get-production-years, gets all production years},{/deactivate-production-year,makes a production year inactive},{/activate-production-year, activates the production year},
+         ********************************************************************************/
+            Route::group(['middleware' => ['role:Admin|Manufacturer']], function () {
+                Route::post('/add-production-year', [PlateSettingsController::class, 'addProductionYear']);
+                Route::post('/update-production-year', [PlateSettingsController::class, 'updateProductionYear']);
+                Route::get('/get-production-years', [PlateSettingsController::class, 'getProductionYears']);
+                Route::post('/deactivate-production-year', [PlateSettingsController::class, 'deactivateProductionYear']);
+                Route::post('/activate-production-year', [PlateSettingsController::class, 'activateProductionYear']);
+            });   
+        /**********************************************************************
+         * END OF PRODUCTION WEEK ROUTES
+         *********************************************************************/
+
+
+         Route::post('/add-production', [PlateController::class, 'addPlateProductionBatch']);
+         
 
 
          

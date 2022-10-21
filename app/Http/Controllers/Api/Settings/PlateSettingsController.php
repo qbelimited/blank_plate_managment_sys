@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Settings;
 use App\Models\Platecolor;
 use Illuminate\Http\Request;
 use App\Models\Platedimension;
+use App\Models\Productionweek;
+use App\Models\Productionyear;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +14,10 @@ use Illuminate\Support\Facades\Validator;
 class PlateSettingsController extends Controller
 {
     //handles the number plate settings
+
+    /**
+     * PLATE COLOR SETTINGS
+     */
 
     //add color
     public function addPlateColor(Request $request){
@@ -100,7 +106,9 @@ class PlateSettingsController extends Controller
 
 
 
-    //DIMENSION SETTINGS
+    /**
+     * DIMENSION SETTINGS
+     */
 
     //add dimension
     public function addPlateDimension(Request $request){
@@ -130,7 +138,7 @@ class PlateSettingsController extends Controller
         }
     }
 
-    //add edit color
+    //add update plate dimension
     public function updatePlateDimension(Request $request){
         
         //validate user entry
@@ -165,13 +173,13 @@ class PlateSettingsController extends Controller
         }
     }
 
-    //get all the plate colors
+    //get all the plate dimensions
     public function getPlateDimensions(){
-        //get all companies
+        //get all plate dimensions
         return response()->json(['platedimensions' => PlateDimension::all(),'response_code'=>'200','message'=>'All plate dimensions']);
     }
 
-    //deactivate plate color
+    //deactivate plate dimension
     public function deactivatePlateDimension(Request $request){
         $plateDimension = PlateDimension::find($request->id);
         $plateDimension->status = 0;
@@ -181,13 +189,204 @@ class PlateSettingsController extends Controller
         }
     }
 
-    //activate plate color
+    //activate plate dimension
     public function activatePlateDimension(Request $request){
         $plateDimension = PlateDimension::find($request->id);
         $plateDimension->status = 1;
         $ok = $plateDimension->save();
         if($ok){
             return response()->json(['plate dimensions' => $plateDimension,'response_code'=>'200','message'=>'Plate Dimension Activated']);
+        }
+    }
+
+
+
+    /**
+     * PRODUCTION WEEK SETTINGS
+     */
+
+
+      //add production week
+    public function addProductionWeek(Request $request){
+        
+           //validate user entry
+        $validator = Validator::make($request->all(), [
+            'description' => 'required',
+            'code' => 'required|unique:production_weeks',
+            'status'=> 'required'
+        ]);
+
+             //if the validation fails return error
+        if($validator->fails()){
+            return $validator->messages();
+        }else{
+            
+            //now create the production week
+            $productionWeek = Productionweek::create($request->all());
+
+            //if creation is a success return return success
+            if($productionWeek){
+                return response()->json(['production week' => $productionWeek,'response_code'=>'200','message'=>'Production Week Added']);
+            }else{
+                return response()->json(['response_code'=>'401','message'=>'Something went wrong, try again or contact admin']);
+            }
+        }
+    }
+
+    //add update production week
+    public function updateProductionWeek(Request $request){
+        
+        //validate user entry
+        $validator = Validator::make($request->all(), [                
+                'code' => [
+                    'required',
+                    Rule::unique('production_weeks')->ignore($request->id),
+                ],
+                'description' => 'required',
+                'status'=> 'required'
+        ]);
+                
+
+        //if the validation fails return error
+        if($validator->fails()){
+                return $validator->messages();
+        }else{
+                
+                //now update the production week
+                $productionWeek = Productionweek::find($request->id)->update($request->all());
+
+                //if creation is a success return return success
+                if($productionWeek){
+                    return response()->json(['response_code'=>'200','message'=>'Production Week Updated']);
+                }else{
+                    return response()->json(['response_code'=>'401','message'=>'Something went wrong, try again or contact admin']);
+                }
+        }
+    }
+
+    //get all the production weeks
+    public function getProductionWeeks(){
+        //get all production weeks
+        return response()->json(['production weeks' => Productionweek::all(),'response_code'=>'200','message'=>'All production weeks']);
+    }
+
+    //deactivate production week
+    public function deactivateProductionWeek(Request $request){
+        $productionWeek = Productionweek::find($request->id);
+        if($productionWeek){
+            $productionWeek->status = 0;
+            $ok = $productionWeek->save();
+            if($ok){
+                return response()->json(['Production week' => $productionWeek,'response_code'=>'200','message'=>'Production week Deactivated']);
+            }
+        }else{
+                return response()->json(['Production week' => $productionWeek,'response_code'=>'401','message'=>'Production week does not exist']);
+        }
+        
+    }
+
+    //activate production week
+    public function activateProductionWeek(Request $request){
+        $productionWeek = Productionweek::find($request->id);
+        $productionWeek->status = 1;
+        $ok = $productionWeek->save();
+        if($ok){
+            return response()->json(['production week' => $productionWeek,'response_code'=>'200','message'=>'Production week Activated']);
+        }
+    }
+
+
+
+    /**
+     * PRODUCTION YEAR SETTINGS
+     */
+
+      //add production year
+    public function addProductionYear(Request $request){
+
+           //validate user entry
+        $validator = Validator::make($request->all(), [
+            'description' => 'required',
+            'code' => 'required|unique:production_years',
+            'status'=> 'required'
+        ]);
+
+             //if the validation fails return error
+        if($validator->fails()){
+            return $validator->messages();
+        }else{
+            
+            //now create the production year
+            $productionYear = Productionyear::create($request->all());
+
+            //if creation is a success return return success
+            if($productionYear){
+                return response()->json(['production year' => $productionYear,'response_code'=>'200','message'=>'Production Year Added']);
+            }else{
+                return response()->json(['response_code'=>'401','message'=>'Something went wrong, try again or contact admin']);
+            }
+        }
+    }
+
+    //add update production week
+    public function updateProductionYear(Request $request){
+        
+        //validate user entry
+        $validator = Validator::make($request->all(), [                
+                'code' => [
+                    'required',
+                    Rule::unique('production_years')->ignore($request->id),
+                ],
+                'description' => 'required',
+                'status'=> 'required'
+        ]);
+                
+
+        //if the validation fails return error
+        if($validator->fails()){
+                return $validator->messages();
+        }else{
+                
+                //now update the production year
+                $productionYear = Productionyear::find($request->id)->update($request->all());
+
+                //if creation is a success return return success
+                if($productionYear){
+                    return response()->json(['response_code'=>'200','message'=>'Production Week Updated']);
+                }else{
+                    return response()->json(['response_code'=>'401','message'=>'Something went wrong, try again or contact admin']);
+                }
+        }
+    }
+
+    //get all the production years
+    public function getProductionYears(){
+        //get all production years
+        return response()->json(['production years' => Productionyear::all(),'response_code'=>'200','message'=>'All production years']);
+    }
+
+    //deactivate production year
+    public function deactivateProductionYear(Request $request){
+        $productionYear = Productionyear::find($request->id);
+        if($productionYear){
+            $productionYear->status = 0;
+            $ok = $productionYear->save();
+            if($ok){
+                return response()->json(['Production year' => $productionYear,'response_code'=>'200','message'=>'Production year Deactivated']);
+            }
+        }else{
+                return response()->json(['Production year' => $productionYear,'response_code'=>'401','message'=>'Production year does not exist']);
+        }
+        
+    }
+
+    //activate production year
+    public function activateProductionYear(Request $request){
+        $productionYear = Productionyear::find($request->id);
+        $productionYear->status = 1;
+        $ok = $productionYear->save();
+        if($ok){
+            return response()->json(['production year' => $productionYear,'response_code'=>'200','message'=>'Production year Activated']);
         }
     }
 
