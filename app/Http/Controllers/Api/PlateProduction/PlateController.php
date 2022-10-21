@@ -70,7 +70,7 @@ class PlateController extends Controller
     //get plate
     public function getPlate(Request $request){
         // return $request;
-        $plate = Plate::where([['number_plate','like','%'.$request->name.'%'],['plate_color_id','=',$request->color],['plate_dimension_id','=',$request->dimension]])->get();
+        $plate = Plate::where([['number_plate','like','%'.$request->name.'%'],['plate_color_id','like','%'.$request->color.'%'],['plate_dimension_id','like','%'.$request->dimension.'%']])->get();
 
         if(count($plate)>0){
             return response()->json(['Number plate(s)' => $plate,'response_code'=>'200','message'=>'Number plates']);
