@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             PlatedimensionsTableSeeder::class,
             ProductionweeksTableSeeder::class,
             ProductionyearsTableSeeder::class,
+            ProductionTableSeeder::class,
+            SerialTableSeeder::class,
+            PlateTableSeeder::class,
             
         ]);
     }

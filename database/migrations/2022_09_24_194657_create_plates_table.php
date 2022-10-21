@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('plates', function (Blueprint $table) {
             $table->id();
-            $table->string('color');
-            $table->string('dimensions');
+            $table->string('number_plate');
+            $table->foreignId('plate_color_id')->constrained();
+            $table->foreignId('plate_dimension_id')->constrained();
             $table->foreignId('serial_number_id')->constrained();
             $table->timestamps();
         });

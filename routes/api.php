@@ -197,12 +197,23 @@ Route::prefix('/npms/v1')->group(function(){
          }); 
 
          /**********************************************************************
-         * END OF NUMBER PLATE BATCHES
+         * END OF EMBOSSER
          *********************************************************************/
          
          
          
+        /******************************************************************************
+         * PLATE ROUTES, ALL ROUTES HERE ARE RESPONSIBLE FOR EMBOSSER FUNCTIONS
+         *{/add-production, for creating number plate batches},{/get-all-production, for retriving all the batches}
+         ********************************************************************************/
+         Route::group(['middleware' => ['role:Admin|Dvla']], function () {
+            Route::get('/get-all-plates', [PlateController::class, 'getNumbrPlates']);
+            Route::get('/get-plate/{name}', [PlateController::class, 'getPlate']);
+         }); 
 
+         /**********************************************************************
+         * END OF EMBOSSER
+         *********************************************************************/
 
          
         

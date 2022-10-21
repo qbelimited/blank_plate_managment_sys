@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\PlateProduction;
 
 use Carbon\Carbon;
+use App\Models\Plate;
 use App\Models\Production;
 use Illuminate\Http\Request;
 use App\Models\Productionweek;
@@ -58,5 +59,22 @@ class PlateController extends Controller
     public function getAllProduction(){
         //get all production years
         return response()->json(['production years' => Production::all(),'response_code'=>'200','message'=>'All production']);
+    }
+
+
+    //get all number plates
+    public function getNumbrPlates(){
+        return response()->json(['all number plates' => Plate::all(),'response_code'=>'200','message'=>'All number plates']);
+    }
+
+    //get plate
+    public function getPlate(Request $request){
+        $plate = Plate::where('number_plate','like','%'.$request->name.'%')->get();
+
+        if(count($plate)>0){
+            return response()->json(['Number plate(s)' => $plate,'response_code'=>'200','message'=>'Number plates']);
+        }else{
+            return response()->json(['response_code'=>'200','message'=>'No data found']);
+        }
     }
 }
