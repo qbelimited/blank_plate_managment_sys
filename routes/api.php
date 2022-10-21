@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Company\CompanyController;
+use App\Http\Controllers\Api\Storage\StorageController;
 use App\Http\Controllers\Api\Embosser\EmbosserController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Help\HelpAndSupportController;
@@ -217,9 +218,30 @@ Route::prefix('/npms/v1')->group(function(){
          *********************************************************************/
 
 
+         /**
+          * general routes for all authenticated users
+          */
          Route::post('/help', [HelpAndSupportController::class, 'askForHelp']);
-         Route::get('/all-help', [HelpAndSupportController::class, 'getAllHelpRequest']);
+         
 
+         /**
+          * General routes for admin and dvla users
+          */
+         Route::group(['middleware' => ['role:Admin|Dvla']], function () {
+            Route::post('/add-warehouse', [StorageController::class, 'addWareHouse']);
+            Route::get('/get-warehouse-items/{id}', [StorageController::class, 'getWareHouseItems']);
+            Route::get('/get-warehouses', [StorageController::class, 'getWareHouses']);
+            
+         });
+
+
+         /**
+          * General routes for admin
+          */
+          Route::group(['middleware' => ['role:Admin|Dvla']], function () {
+            Route::get('/all-help', [HelpAndSupportController::class, 'getAllHelpRequest']);
+         });
+         
          
         
         

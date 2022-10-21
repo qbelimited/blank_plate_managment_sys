@@ -19,6 +19,8 @@ class PlateTableSeeder extends Seeder
             'number_plate' => 'AC-001 GH',
             'plate_color_id' => 1,
             'plate_dimension_id' => 1,
+            'storage' => 1,
+            'warehouse_id' => 1,
             'serial_number_id' => 1
         ]);
 
@@ -26,6 +28,8 @@ class PlateTableSeeder extends Seeder
             'number_plate' => 'AC-002 GH',
             'plate_color_id' => 1,
             'plate_dimension_id' => 1,
+            'storage' => 1,
+            'warehouse_id' => 1,
             'serial_number_id' => 1
         ]);
 
@@ -33,6 +37,8 @@ class PlateTableSeeder extends Seeder
             'number_plate' => 'AC-003 GH',
             'plate_color_id' => 1,
             'plate_dimension_id' => 1,
+            'storage' => 1,
+            'warehouse_id' => 1,
             'serial_number_id' => 1
         ]);
     }

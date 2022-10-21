@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ProductionyearsTableSeeder::class,
             ProductionTableSeeder::class,
             SerialTableSeeder::class,
+            WarehouseTableSeeder::class,
             PlateTableSeeder::class,
             
         ]);

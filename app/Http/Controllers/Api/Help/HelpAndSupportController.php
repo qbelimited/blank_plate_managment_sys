@@ -26,7 +26,7 @@ class HelpAndSupportController extends Controller
             return $validator->messages();
         }else{
             
-            //now create the plate batch
+            //now add the help
             $help = Helpandsupport::create($request->all());
 
             //if success, return success message else error message
