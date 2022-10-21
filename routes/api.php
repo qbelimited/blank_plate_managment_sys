@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Company\CompanyController;
 use App\Http\Controllers\Api\Embosser\EmbosserController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
+use App\Http\Controllers\Api\Help\HelpAndSupportController;
 use App\Http\Controllers\Api\PlateProduction\PlateController;
 use App\Http\Controllers\Api\Settings\PlateSettingsController;
 
@@ -212,8 +213,12 @@ Route::prefix('/npms/v1')->group(function(){
          }); 
 
          /**********************************************************************
-         * END OF EMBOSSER
+         * END OF PLATE MANAGEMENT
          *********************************************************************/
+
+
+         Route::post('/help', [HelpAndSupportController::class, 'askForHelp']);
+         Route::get('/all-help', [HelpAndSupportController::class, 'getAllHelpRequest']);
 
          
         

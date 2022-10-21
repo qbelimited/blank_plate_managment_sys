@@ -61,6 +61,7 @@ class UsersTableSeeder extends Seeder
 
         $user = User::create([
             'fname' => 'Admin',
+            'mname' => 'Admin',
             'lname' => 'Super',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin1234'),
@@ -78,6 +79,7 @@ class UsersTableSeeder extends Seeder
 
         $user = User::create([
             'fname' => 'Manufacturer',
+            'mname' => 'Admin',
             'lname' => 'Admin',
             'email' => 'manf@admin.com',
             'password' => bcrypt('admin1234'),
@@ -95,6 +97,7 @@ class UsersTableSeeder extends Seeder
 
         $user = User::create([
             'fname' => 'Dvla',
+            'mname' => 'Admin',
             'lname' => 'Admin',
             'email' => 'dvla@admin.com',
             'password' => bcrypt('admin1234'),
@@ -111,6 +114,7 @@ class UsersTableSeeder extends Seeder
 
         $user =  User::create([
             'fname' => 'Embosser',
+            'mname' => 'Admin',
             'lname' => 'Admin',
             'email' => 'emboss@admin.com',
             'password' => bcrypt('admin1234'),

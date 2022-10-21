@@ -29,6 +29,8 @@ class RegisterController extends Controller
         //validate user creation details
         $validator = Validator::make($request->all(), [
             'fname' => 'required',
+            'mname' => 'required',
+            'lname' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'national_id' => 'unique:users|required',
