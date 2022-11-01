@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/au49kqgfp24k/public_html/bpmsapi
+    - /bin/cp -R * $DEPLOYPATH
