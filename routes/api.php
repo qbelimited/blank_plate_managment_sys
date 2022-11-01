@@ -6,10 +6,13 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Delivery\BillController;
 use App\Http\Controllers\Api\Company\CompanyController;
 use App\Http\Controllers\Api\Storage\StorageController;
+use App\Http\Controllers\Api\Delivery\ReceivedController;
 use App\Http\Controllers\Api\Embosser\EmbosserController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
+use App\Http\Controllers\Api\Delivery\DeliveredController;
 use App\Http\Controllers\Api\Help\HelpAndSupportController;
 use App\Http\Controllers\Api\PlateProduction\PlateController;
 use App\Http\Controllers\Api\Settings\PlateSettingsController;
@@ -241,6 +244,28 @@ Route::prefix('/npms/v1')->group(function(){
           Route::group(['middleware' => ['role:Admin|Dvla']], function () {
             Route::get('/all-help', [HelpAndSupportController::class, 'getAllHelpRequest']);
          });
+
+
+
+         /**
+          * Delivery endpoints
+          */
+
+          Route::post('/make-delivery', [DeliveredController::class, 'addDelivery']);
+          Route::post('/confirm-delivery', [DeliveredController::class, 'changeDeliveryStatus']);
+          Route::get('/all-deliveries', [DeliveredController::class, 'getAllDeliveries']);
+          Route::post('/verify-delivery', [ReceivedController::class, 'confirmReceived']);
+          Route::get('/all-received-plates', [ReceivedController::class, 'getVerifiedPlates']);
+          Route::post('/make-payment', [BillController::class, 'makePayment']);
+          Route::post('/confirm-payment', [BillController::class, 'confirmPayment']);
+          Route::get('/all-bills', [BillController::class, 'getAllBills']);
+          Route::get('/get-bill-details/{id}', [BillController::class, 'getBillDetails']);
+          
+          
+          
+          
+          
+          
          
          
         

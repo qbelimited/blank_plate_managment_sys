@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             SerialTableSeeder::class,
             WarehouseTableSeeder::class,
             PlateTableSeeder::class,
+            CurrencySeeder::class,
             
         ]);
     }
