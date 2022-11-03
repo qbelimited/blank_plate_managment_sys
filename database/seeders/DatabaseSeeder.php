@@ -18,15 +18,15 @@ class DatabaseSeeder extends Seeder
             PermissionTableSeeder::class,
             UsersTableSeeder::class,
             PlateColorsTableSeeder::class,
-            PlatedimensionsTableSeeder::class,
-            ProductionweeksTableSeeder::class,
-            ProductionyearsTableSeeder::class,
+            PlateDimensionsTableSeeder::class,
+            ProductionWeeksTableSeeder::class,
+            ProductionYearsTableSeeder::class,
             ProductionTableSeeder::class,
             SerialTableSeeder::class,
             WarehouseTableSeeder::class,
             PlateTableSeeder::class,
             CurrencySeeder::class,
-            
+
         ]);
     }
 }

@@ -6,7 +6,7 @@ use App\Models\ProductionYear;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProductionyearsTableSeeder extends Seeder
+class ProductionYearsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

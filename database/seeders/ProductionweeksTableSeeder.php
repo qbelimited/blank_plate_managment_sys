@@ -6,7 +6,7 @@ use App\Models\ProductionWeek;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProductionweeksTableSeeder extends Seeder
+class ProductionWeeksTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
