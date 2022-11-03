@@ -26,7 +26,8 @@ class LoginController extends Controller
         //try to authenticate the user 
         //if the auth is successfull return the access token else return error
         if(Auth::attempt($login)){
-            $token = Auth::user()->createToken('AuthToken')->accessToken;
+            // $token = Auth::user()->createToken('AuthToken')->accessToken;
+            $token ="lkjfjdlkjfld";
 
             if (auth()->user()->hasRole('Embosser')) {
                 return response()->json(['user' => Auth::user(), 'token' => $token, 'response_code'=>'200','message'=>'redirect to embosser screen']);
