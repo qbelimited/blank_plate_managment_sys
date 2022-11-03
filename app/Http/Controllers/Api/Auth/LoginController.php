@@ -26,8 +26,7 @@ class LoginController extends Controller
         //try to authenticate the user 
         //if the auth is successfull return the access token else return error
         if(Auth::attempt($login)){
-            // $token = Auth::user()->createToken('AuthToken')->accessToken;
-            $token ="lkjfjdlkjfld";
+            $token = Auth::user()->createToken('AuthToken')->accessToken;
 
             if (auth()->user()->hasRole('Embosser')) {
                 return response()->json(['user' => Auth::user(), 'token' => $token, 'response_code'=>'200','message'=>'redirect to embosser screen']);
@@ -36,7 +35,7 @@ class LoginController extends Controller
             } else if (auth()->user()->hasRole('Dvla')) {
                 return response()->json(['user' => Auth::user(), 'token' => $token, 'response_code'=>'200','message'=>'redirect to dvla screen']);
             } else {
-                return response()->json(['user' => Auth::user(), 'token' => $token, 'response_code'=>'200','message'=>'redirect to super admin']);
+                return response()->json(['user' => Auth::user(), 'token' => $token, 'response_code'=>'200','message'=>'redirect to super admin1']);
             }
         }else{
             return response()->json(['error' => 'Unauthorised user','response_code'=>'401']);
