@@ -13,4 +13,8 @@ class Plate extends Model
     {
         return $this->belongsTo(Serialnumbered::class);
     }
+
+    public function Embosser(){
+        return $this->hasOne(Embosser::class);
+    }
 }

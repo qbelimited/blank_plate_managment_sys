@@ -8,6 +8,7 @@ use App\Models\Production;
 use Illuminate\Http\Request;
 use App\Models\Productionweek;
 use App\Models\Productionyear;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -58,22 +59,36 @@ class PlateController extends Controller
     //get all the production years
     public function getAllProduction(){
         //get all production years
-        return response()->json(['production years' => Production::all(),'response_code'=>'200','message'=>'All production']);
+        $statement = DB::raw("select p.id,c.color,d.description as dimension,p.batch_code,p.quantity,p.job_status,p.serial_starts,w.description as production_week,y.description as production_year,p.manufacture_date,p.status from productions p,plate_colors c,plate_dimensions d, production_weeks w,production_years y where c.id = p.plate_color_id and d.id = p.plate_dimension_id and w.id = p.production_week_id and y.id = p.production_year_id");
+        $allProduction = DB::select($statement);
+        
+        return response()->json(['all productions' => $allProduction,'response_code'=>'200','message'=>'All productions']);
     }
 
 
     //get all number plates
     public function getNumbrPlates(){
-        return response()->json(['all number plates' => Plate::all(),'response_code'=>'200','message'=>'All number plates']);
+
+        //get all the plates
+        $statement = DB::raw("SELECT p.id,p.number_plate,s.serial,c.color,d.description as dimension,p.storage,w.name as warehouse from plates p,plate_colors c, plate_dimensions d, warehouses w,serial_numbers s where p.plate_color_id = c.id and p.plate_dimension_id = d.id and p.warehouse_id = w.id and p.serial_number_id = s.id");
+        $allPlates = DB::select($statement);
+        
+        return response()->json(['all number plates' => $allPlates,'response_code'=>'200','message'=>'All number plates']);
     }
 
     //get plate
     public function getPlate(Request $request){
-        // return $request;
-        $plate = Plate::where([['number_plate','like','%'.$request->name.'%'],['plate_color_id','like','%'.$request->color.'%'],['plate_dimension_id','like','%'.$request->dimension.'%']])->get();
+        // return search;
+        $statement = DB::raw("SELECT p.id,p.number_plate,s.serial,c.color,d.description as dimension,p.storage,
+         w.name as warehouse from plates p,plate_colors c, plate_dimensions d, warehouses w,serial_numbers s
+         where p.plate_color_id = c.id and p.plate_dimension_id = d.id and p.warehouse_id = w.id and
+         p.serial_number_id = s.id and number_plate LIKE '%$request->name%' and plate_color_id like '%$request->color%' and plate_dimension_id like '%$request->dimension%';");
+        $plateSearch = DB::select($statement);
+        
+        // $plate = Plate::where([['number_plate','like','%'.$request->name.'%'],['plate_color_id','like','%'.$request->color.'%'],['plate_dimension_id','like','%'.$request->dimension.'%']])->get();
 
-        if(count($plate)>0){
-            return response()->json(['Number plate(s)' => $plate,'response_code'=>'200','message'=>'Number plates']);
+        if(count($plateSearch)>0){
+            return response()->json(['Number plate(s)' => $plateSearch,'response_code'=>'200','message'=>'Number plates']);
         }else{
             return response()->json(['response_code'=>'200','message'=>'No data found']);
         }

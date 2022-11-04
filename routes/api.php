@@ -41,7 +41,7 @@ use App\Http\Controllers\Api\Settings\PlateSettingsController;
 Route::prefix('/npms/v1')->group(function(){
     Route::post('/login', [LoginController::class, 'login']);
     
-    Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['middleware' => ['auth:api','cors']], function () {
 
         /****************************************************************
         *ALL ROUTES BELOW LOGIN TO USER AUTHENTICATION AND USER MANAGEMENT

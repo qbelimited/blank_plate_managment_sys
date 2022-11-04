@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Embosser;
 use App\Models\Embosser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -50,10 +51,14 @@ class EmbosserController extends Controller
     }
 
     //get all embossed plates
-    public function getAllEmbossed(Request $request){
+    public function getAllEmbossed(){
+        
+        //select all embossed plates and their details
+        $statement = DB::raw("SELECT e.id,p.number_plate,e.embosser_text,m.color,e.status FROM `embossers` e,plates p,embosser_colors m where e.plate_id = p.id and m.id = e.embosser_color_id");
+        $embossed = DB::select($statement);
 
         //get all embossed plates
-        return response()->json(['embossed plates' => Embosser::all(),'response_code'=>'200','message'=>'All embossed plates']);
+        return response()->json(['embossed plates' => $embossed,'response_code'=>'200','message'=>'All embossed plates']);
     }
 
     //add edit embossed plate

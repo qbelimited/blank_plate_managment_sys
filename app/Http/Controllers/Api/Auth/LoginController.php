@@ -38,7 +38,7 @@ class LoginController extends Controller
                 return response()->json(['user' => Auth::user(), 'token' => $token, 'response_code'=>'200','message'=>'redirect to super admin1']);
             }
         }else{
-            return response()->json(['error' => 'Unauthorised user','response_code'=>'401']);
+            return response()->json(['error' => 'Incorrect password or email','response_code'=>'403']);
         }
 
             

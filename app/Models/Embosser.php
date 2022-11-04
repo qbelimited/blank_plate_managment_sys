@@ -16,4 +16,10 @@ class Embosser extends Model
         'embosser_text',
         'status'
     ];
+
+    public function Plate(){
+        return $this->belongsTo(Plate::class);
+    }
+
+
 }
