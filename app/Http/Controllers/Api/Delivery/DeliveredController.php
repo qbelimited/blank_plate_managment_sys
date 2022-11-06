@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Delivery;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\DeliveredItem;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -63,7 +64,10 @@ class DeliveredController extends Controller
     //get all deliveries
     public function getAllDeliveries(){
         //get all deliveries
-        return response()->json(['all deliveries' => DeliveredItem::all(),'response_code'=>'200','message'=>'All deliveries']);
+        $statement = DB::raw("select p.id,p.number_plate,CONCAT(u.fname,' ',u.mname,' ',u.lname) as sent_by,d.delivered,d.date,c.name,d.quantity,d.cost from delivered_items d,plates p,users u,companies c where d.plate_id = p.id and d.user_id = u.id and d.company_id = c.id;");
+        $deliveredItems = DB::select($statement);
+        
+        return response()->json(['all deliveries' => $deliveredItems,'response_code'=>'200','message'=>'All deliveries']);
     }
     
 }

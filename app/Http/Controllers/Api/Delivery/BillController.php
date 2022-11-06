@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Bill;
 use App\Models\ReceivedItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,14 +70,20 @@ class BillController extends Controller
 
     //get all payments
     public function getAllBills(){
-        //get all bills     
-        return response()->json(['All Bills' => Bill::all(),'response_code'=>'200','message'=>'All bills']);
+        //get all bills
+        $statement = DB::raw("SELECT b.id,p.number_plate,c.currency,b.note,b.ispaid,b.paid_at,b.method_of_payment,b.isconfirmed from bills b,plates p, currencies c where b.received_item_id = p.id and b.currency_id = c.id;");
+        $allbills = DB::select($statement);
+             
+        return response()->json(['All Bills' => $allbills,'response_code'=>'200','message'=>'All bills']);
     }
 
 
     //this function get the number plates that were paid for by passing the id of the bill
     public function getBillDetails(Request $request){
-         return response()->json(['Bill Details' => Bill::find($request->id)->ReceivedItem->DeliveredItem,'response_code'=>'200','message'=>'Bill Details']);
+        $statement = DB::raw("select p.id,p.number_plate,CONCAT(u.fname,' ',u.mname,' ',u.lname) as sent_by,d.delivered,d.date,c.name,d.quantity,d.cost from delivered_items d,plates p,users u,companies c where d.plate_id = p.id and d.user_id = u.id and d.company_id = c.id and d.id = '$request->id';");
+        $billDetails = DB::select($statement);
+        
+         return response()->json(['Bill Details' => $billDetails,'response_code'=>'200','message'=>'Bill Details']);
     }
 
     // return Bill::find(2)->ReceivedItem;
