@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('received_item_id')->constrained();
+            $table->string('invoice');
             $table->foreignId('currency_id')->constrained();
             $table->string('note')->nullable();
             $table->boolean('ispaid')->default(0);

@@ -37,6 +37,9 @@ class BillController extends Controller
             //set paid to true
             $request['ispaid'] = 1;
 
+            //generate invoice
+            $request['invoice'] = rand();
+
             //make payment
             $bill = Bill::create($request->all());
 
@@ -71,7 +74,7 @@ class BillController extends Controller
     //get all payments
     public function getAllBills(){
         //get all bills
-        $statement = DB::raw("SELECT b.id,p.number_plate,c.currency,b.note,b.ispaid,b.paid_at,b.method_of_payment,b.isconfirmed from bills b,plates p, currencies c where b.received_item_id = p.id and b.currency_id = c.id;");
+        $statement = DB::raw("SELECT b.id,b.paid_at as timestamp,b.invoice,c.name,CONCAT(u.fname,' ',u.mname,' ',u.lname) as sent_by,b.paid_by as received_by, b.ispaid as status FROM bills b,`received_items` r,delivered_items d,companies c, users u where b.received_item_id = r.id and r.delivered_item_id = d.id and d.user_id = u.id;");
         $allbills = DB::select($statement);
              
         return response()->json(['All Bills' => $allbills,'response_code'=>'200','message'=>'All bills']);

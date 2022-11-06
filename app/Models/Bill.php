@@ -19,7 +19,8 @@ class Bill extends Model
             'paid_at',
             'paid_by',
             'method_of_payment',
-            'isconfirmed'
+            'isconfirmed',
+            'invoice'
     ];
 
     public function ReceivedItem(){
