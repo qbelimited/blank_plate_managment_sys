@@ -19,6 +19,16 @@ class PlateController extends Controller
 
     //this function handles batch production of plates
     public function addPlateProductionBatch(Request $request){
+
+        //check the production table to see if serial_start already exist or is less than existing ones
+        $statement = DB::raw("SELECT * FROM `productions` where $request->serial_starts <= productions.serial_starts;");
+        $serialStartCheck = DB::select($statement);
+
+        //if it exist or less than existing serial_starts prrevent user from proceeding
+        if($serialStartCheck){
+            return response()->json(['response_code'=>'401','message'=>'Last Serial has been used already or is lesser than existing ones']);
+        }
+
         
         //validate user entry
         $validator = Validator::make($request->all(), [
@@ -26,7 +36,7 @@ class PlateController extends Controller
             'plate_dimension_id' =>  'required',
             'batch_code' => 'required|integer|unique:productions',
             'quantity' => 'required|integer',
-            'serial_starts' => 'required|integer'
+            'serial_starts' => 'required|integer|unique:productions'
         ]);
 
         //if the validation fails return error
@@ -103,26 +113,23 @@ class PlateController extends Controller
     //generate serial numbers for number plate
     public function generate_serial($id){
 
-        // $gen_id = DB::table('productions')->where('job_status', 0)->value('id');
-        // $start = DB::table('productions')->where('job_status', 0)->value('serial_starts');
-        // $quantity = DB::table('productions')->where('job_status', 0)->value('quantity');
-
-        // $generateSerials = Production::where('id', '=', $id);
-        // $generateSerials = Production::where('id', '=', $plateBatch->id)->get();
-            // return $generateSerials->id;
+        //select the production batch to generate serials
         $statement = DB::raw("select * from productions where id = '$id' and job_status = 0");
         $plateB = DB::select($statement);
 
+        //select production id,serial_starts,quantity
         $gen_id = $plateB[0]->id;
         $last_serial = $plateB[0]->serial_starts;
         $quantity = $plateB[0]->quantity;
 
+        //get the start and end for generating
         $start = $last_serial+1;
-
         $end = $start + $quantity;
 
+        //get the range
         $numbers = range($start, $end, 1);
 
+        //generate serial numbers and insert into serials table
         foreach ($numbers as $number) {
             DB::table('serial_numbers')->insert(
                 array(
@@ -131,6 +138,8 @@ class PlateController extends Controller
                 )
             );
         }
+
+        //call the generate plate function
         $this->generatePlate($gen_id);
 
     }
@@ -174,6 +183,10 @@ class PlateController extends Controller
 
                 )
             );
+
+            //update serial to set assigned to 1
+            $statement = DB::raw("update serial_numbers set assigned = 1 where id = '$serial->id'");
+            DB::update($statement);
         }
 
     }

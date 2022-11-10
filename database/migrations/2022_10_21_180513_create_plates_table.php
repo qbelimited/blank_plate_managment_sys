@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('plate_color_id')->constrained();
             $table->foreignId('plate_dimension_id')->constrained();
             $table->boolean('storage');
-            $table->foreignId('warehouse_id')->constrained();
+            $table->foreignId('warehouse_id')->nullable()->constrained();
             $table->foreignId('serial_number_id')->constrained();
             $table->timestamps();
         });

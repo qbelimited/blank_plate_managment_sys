@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('production_id')->constrained();
             $table->string('serial');
+            $table->boolean('assigned')->default(0);
             $table->timestamps();
         });
     }
