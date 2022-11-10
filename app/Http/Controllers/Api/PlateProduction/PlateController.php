@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\PlateProduction;
 
 use Carbon\Carbon;
 use App\Models\Plate;
+use App\Models\Platecolor;
 use App\Models\Production;
 use Illuminate\Http\Request;
+use App\Models\Platedimension;
 use App\Models\Productionweek;
 use App\Models\Productionyear;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +48,10 @@ class PlateController extends Controller
             //now create the plate batch
             $plateBatch = Production::create($request->all());
 
-            //if success, return success message else error message
+            //this function generates serial numbers for the number plates
+            $this->generate_serial($plateBatch->id);
+
+            // if success, return success message else error message
             if($plateBatch){
                 return response()->json(['plate batch' => $plateBatch,'response_code'=>'200','message'=>'Batch created successfully']);
             }else{
@@ -92,5 +97,84 @@ class PlateController extends Controller
         }else{
             return response()->json(['response_code'=>'200','message'=>'No data found']);
         }
+    }
+
+
+    //generate serial numbers for number plate
+    public function generate_serial($id){
+
+        // $gen_id = DB::table('productions')->where('job_status', 0)->value('id');
+        // $start = DB::table('productions')->where('job_status', 0)->value('serial_starts');
+        // $quantity = DB::table('productions')->where('job_status', 0)->value('quantity');
+
+        // $generateSerials = Production::where('id', '=', $id);
+        // $generateSerials = Production::where('id', '=', $plateBatch->id)->get();
+            // return $generateSerials->id;
+        $statement = DB::raw("select * from productions where id = '$id' and job_status = 0");
+        $plateB = DB::select($statement);
+
+        $gen_id = $plateB[0]->id;
+        $last_serial = $plateB[0]->serial_starts;
+        $quantity = $plateB[0]->quantity;
+
+        $start = $last_serial+1;
+
+        $end = $start + $quantity;
+
+        $numbers = range($start, $end, 1);
+
+        foreach ($numbers as $number) {
+            DB::table('serial_numbers')->insert(
+                array(
+                    'production_id'   =>   $gen_id,
+                    'serial'   =>   $number,
+                )
+            );
+        }
+        $this->generatePlate($gen_id);
+
+    }
+
+
+    //generate plates from serial
+    public function generatePlate($gen_id){
+
+        //get the production details
+        $statement = DB::raw("select * from productions where id = '$gen_id'");
+        $productionDetails = DB::select($statement);
+
+        //get the serials
+        $statement = DB::raw("select * from serial_numbers where production_id = '$gen_id'");
+        $allSerials = DB::select($statement);
+
+        //get the id's of all related data
+        $plateColorId = $productionDetails[0]->plate_color_id;
+        $plateDimensionId = $productionDetails[0]->plate_dimension_id;
+        $batchCode = $productionDetails[0]->batch_code;
+        $lastSerial = $productionDetails[0]->serial_starts;
+        $productionWeekId = $productionDetails[0]->production_week_id;
+        $productionYearId = $productionDetails[0]->production_year_id;
+
+        //get the codes of each related data
+        $plateColorCode = Platecolor::find($plateColorId,'code');
+        $plateDimensionCode = Platedimension::find($plateDimensionId, 'code');
+        $plateWeekCode = Productionweek::find($productionWeekId,'code');
+        $plateYearCode = Productionweek::find($productionYearId,'code');
+
+        //generate the plates 
+        foreach ($allSerials as $serial) {
+            DB::table('plates')->insert(
+                array(
+                    'number_plate'   =>   $plateDimensionCode->code."".$plateColorCode->code."".$batchCode."".$serial->serial."".$plateWeekCode->code."".$plateYearCode->code,
+                    'plate_color_id'   =>   $plateColorId,
+                    'plate_dimension_id'   =>   $plateDimensionId,
+                    'storage' => 1,
+                    'warehouse_id' => 1,
+                    'serial_number_id' => $serial->id,
+
+                )
+            );
+        }
+
     }
 }

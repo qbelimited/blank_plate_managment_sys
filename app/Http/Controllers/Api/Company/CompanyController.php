@@ -52,9 +52,9 @@ class CompanyController extends Controller
 
             //validate user entry
             $validator = Validator::make($request->all(), [
+                'id' => 'required',
                 'name' => 'required',
                 'location' => 'required',
-                'status' => 'required',
                 'phone' => [
                     'required',
                     Rule::unique('companies')->ignore($request->id),

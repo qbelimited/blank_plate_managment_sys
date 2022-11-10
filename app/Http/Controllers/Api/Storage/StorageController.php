@@ -51,7 +51,7 @@ class StorageController extends Controller
         if($warehouseItems){
             return response()->json(['all warehouse items' => $warehouseItems,'response_code'=>'200','message'=>'All warehouse items']);
         }else{
-            return response()->json(['response_code'=>'200','Warehouse Empty'=>$warehouseItems]);
+            return response()->json(['all warehouse items' => $warehouseItems,'response_code'=>'200','message'=>'All warehouse items']);
         }
     }
 
