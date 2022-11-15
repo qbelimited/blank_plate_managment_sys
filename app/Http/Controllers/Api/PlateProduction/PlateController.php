@@ -21,7 +21,7 @@ class PlateController extends Controller
     public function addPlateProductionBatch(Request $request){
 
         //check the production table to see if serial_start already exist or is less than existing ones
-        $statement = DB::raw("SELECT * FROM `productions` where $request->serial_starts <= productions.serial_starts;");
+        $statement = DB::raw("SELECT * FROM `productions` where '$request->serial_starts' <= productions.serial_starts;");
         $serialStartCheck = DB::select($statement);
 
         //if it exist or less than existing serial_starts prrevent user from proceeding
@@ -177,8 +177,6 @@ class PlateController extends Controller
                     'number_plate'   =>   $plateDimensionCode->code."".$plateColorCode->code."".$batchCode."".$serial->serial."".$plateWeekCode->code."".$plateYearCode->code,
                     'plate_color_id'   =>   $plateColorId,
                     'plate_dimension_id'   =>   $plateDimensionId,
-                    'storage' => 1,
-                    'warehouse_id' => 1,
                     'serial_number_id' => $serial->id,
 
                 )

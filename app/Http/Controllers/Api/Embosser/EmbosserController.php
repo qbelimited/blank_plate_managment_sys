@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Embosser;
 
+use App\Models\Plate;
 use App\Models\Embosser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -18,7 +19,7 @@ class EmbosserController extends Controller
 
        //validate user entry
         $validator = Validator::make($request->all(), [
-            // 'plate_id' => 'required|unique:embossers',
+            'plate_id' => 'required|unique:embossers',
             'embosser_color_id' =>  'required',
             'embosser_text' => 'required',
             'status' => 'required|integer'
@@ -30,12 +31,10 @@ class EmbosserController extends Controller
             return $validator->messages();
         }else{
 
-            //get the number plate details{commented untill number plate is ready}
+            // get the number plate details{commented untill number plate is ready}
 
-            // $numberPlate = Plate::find($id);
-            // $request['serial_number_id'] = $production_week_id->id;
-
-            // $request['serial_number_id'] = 1;
+            $numberPlate = Plate::find($request->plate_id);
+            $request['serial_number_id'] = $numberPlate->serial_number_id;
 
             //now emboss the plate
             $embosser = Embosser::create($request->all());
@@ -52,7 +51,7 @@ class EmbosserController extends Controller
 
     //get all embossed plates
     public function getAllEmbossed(){
-        
+
         //select all embossed plates and their details
         $statement = DB::raw("SELECT e.id,p.number_plate,e.embosser_text,m.color,e.status FROM `embossers` e,plates p,embosser_colors m where e.plate_id = p.id and m.id = e.embosser_color_id");
         $embossed = DB::select($statement);
