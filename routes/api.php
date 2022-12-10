@@ -59,8 +59,9 @@ Route::prefix('/npms/v1')->group(function(){
             Route::post('/activate-user', [UserController::class, 'activate']);
             Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
             Route::get('/get-user/{id}', [UserController::class, 'getUser']);
-            Route::post('/logout', [LogoutController::class, 'logout']);
+            
         });
+        Route::post('/logout', [LogoutController::class, 'logout']);
 
         /*********************************************************************
          * END OF USER MANAGEMENT ROUTES
@@ -214,6 +215,7 @@ Route::prefix('/npms/v1')->group(function(){
          Route::group(['middleware' => ['role:Admin|Dvla']], function () {
             Route::get('/get-all-plates', [PlateController::class, 'getNumbrPlates']);
             Route::post('/get-plate', [PlateController::class, 'getPlate']);
+            Route::get('/get-plate-details/{id}', [PlateController::class, 'getDetails']);
          }); 
 
          /**********************************************************************

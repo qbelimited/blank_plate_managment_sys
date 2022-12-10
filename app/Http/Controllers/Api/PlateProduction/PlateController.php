@@ -188,4 +188,17 @@ class PlateController extends Controller
         }
 
     }
+
+    public function getDetails(Request $request){
+
+        $statement = DB::raw("SELECT p.id,p.number_plate,s.serial,c.color,d.description as dimension,w.name as warehouse from plates p,plate_colors c, plate_dimensions d, warehouses w,serial_numbers s where p.plate_color_id = c.id and p.plate_dimension_id = d.id and p.warehouse_id = w.id and p.serial_number_id = s.id and p.id = '$request->id';");
+        $warehouseItems = DB::select($statement);
+        
+
+        if($warehouseItems){
+            return response()->json(['Plate details' => $warehouseItems,'response_code'=>'200','message'=>'All warehouse items']);
+        }else{
+            return response()->json(['Plate details' => $warehouseItems,'response_code'=>'200','message'=>'All warehouse items']);
+        }
+    }
 }
