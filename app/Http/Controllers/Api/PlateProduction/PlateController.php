@@ -109,6 +109,12 @@ class PlateController extends Controller
         }
     }
 
+    //get the plate {GET API}
+    public function getPlateApi($name = null,$color = null){
+        return($name);
+        
+    }
+
 
     //generate serial numbers for number plate
     public function generate_serial($id){

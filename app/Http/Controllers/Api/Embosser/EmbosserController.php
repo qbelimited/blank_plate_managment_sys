@@ -63,34 +63,40 @@ class EmbosserController extends Controller
     //add edit embossed plate
     public function updateEmbossedPlate(Request $request){
 
+        $getEmbossed = Embosser::find($request->id);
+        if($getEmbossed){
+            //validate user entry
+            $validator = Validator::make($request->all(), [
+                    'id' => [
+                        'required',
+                    ],
+                    'plate_id' => [
+                        Rule::unique('embossers')->ignore($request->id),
+                    ],
+                    'embosser_color_id' =>  'required',
+                    'embosser_text' => 'required',
+                    'status' => 'required|integer'
 
-        //validate user entry
-        $validator = Validator::make($request->all(), [
-                // 'plate_id' => [
-                //     'required',
-                //     Rule::unique('embossers')->ignore($request->id),
-                // ],
-                'embosser_color_id' =>  'required',
-                'embosser_text' => 'required',
-                'status' => 'required|integer'
+            ]);
+                    
 
-        ]);
-                
+            //if the validation fails return error
+            if($validator->fails()){
+                    return $validator->messages();
+            }else{
+                    
+                    //now update the embossed plate
+                    $embossedPlate = Embosser::find($request->id)->update($request->all());
 
-        //if the validation fails return error
-        if($validator->fails()){
-                return $validator->messages();
+                    //if update is a success return return success
+                    if($embossedPlate){
+                        return response()->json(['response_code'=>'200','message'=>'Update successfull']);
+                    }else{
+                        return response()->json(['response_code'=>'401','message'=>'Something went wrong, try again or contact admin']);
+                    }
+            }
         }else{
-                
-                //now update the embossed plate
-                $embossedPlate = Embosser::find($request->id)->update($request->all());
-
-                //if update is a success return return success
-                if($embossedPlate){
-                    return response()->json(['response_code'=>'200','message'=>'Update successfull']);
-                }else{
-                    return response()->json(['response_code'=>'401','message'=>'Something went wrong, try again or contact admin']);
-                }
-        }
+            return response()->json(['response_code'=>'200','message'=>'The embossed plate does not exist']);
+        }     
     }
 }
