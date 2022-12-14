@@ -110,8 +110,21 @@ class PlateController extends Controller
     }
 
     //get the plate {GET API}
-    public function getPlateApi($name = null,$color = null){
-        return($name);
+    public function getPlateApi($name,$color,$dimension){
+        
+        $statement = DB::raw("SELECT p.id,p.number_plate,s.serial,c.color,d.description as dimension,p.storage,
+         w.name as warehouse from plates p,plate_colors c, plate_dimensions d, warehouses w,serial_numbers s
+         where p.plate_color_id = c.id and p.plate_dimension_id = d.id and p.warehouse_id = w.id and
+         p.serial_number_id = s.id and number_plate LIKE '%$name%' and plate_color_id like '%$color1%' and plate_dimension_id like '%$dimension%';");
+        $plateSearch = DB::select($statement);
+        
+        // $plate = Plate::where([['number_plate','like','%'.$request->name.'%'],['plate_color_id','like','%'.$request->color.'%'],['plate_dimension_id','like','%'.$request->dimension.'%']])->get();
+
+        if(count($plateSearch)>0){
+            return response()->json(['Number plate(s)' => $plateSearch,'response_code'=>'200','message'=>'Number plates']);
+        }else{
+            return response()->json(['response_code'=>'200','message'=>'No data found']);
+        }
         
     }
 

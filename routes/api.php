@@ -216,7 +216,7 @@ Route::prefix('/npms/v1')->group(function(){
             Route::get('/get-all-plates', [PlateController::class, 'getNumbrPlates']);
             Route::post('/get-plate', [PlateController::class, 'getPlate']);
             Route::get('/get-plate-details/{id}', [PlateController::class, 'getDetails']);
-            Route::get('/plate/{name?}/color/{color?}', [PlateController::class, 'getPlateApi']);
+            Route::get('/plate/{name?}/color/{color?}/dimension/{dimension?}', [PlateController::class, 'getPlateApi']);
          }); 
 
          /**********************************************************************
