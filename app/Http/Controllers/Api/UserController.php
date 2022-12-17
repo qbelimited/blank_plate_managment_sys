@@ -140,4 +140,9 @@ class UserController extends Controller
 
     }
 
+    //get all roles
+    public function getUserRoles(){
+        return $roles = Role::all();
+    }
+
 }

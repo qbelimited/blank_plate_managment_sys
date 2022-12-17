@@ -59,6 +59,7 @@ Route::prefix('/npms/v1')->group(function(){
             Route::post('/activate-user', [UserController::class, 'activate']);
             Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
             Route::get('/get-user/{id}', [UserController::class, 'getUser']);
+            Route::get('/user-roles', [UserController::class, 'getUserRoles']);
             
         });
         Route::post('/logout', [LogoutController::class, 'logout']);
